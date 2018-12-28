@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.dao.OutpatientDao">
+	<resultMap id="outpatientResultMap" type="com.erp.domain.OutpatientDO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="hospital_name" property="hospital_name" jdbcType="VARCHAR" />
+		<result column="summary_date_begin" property="summary_date_begin" jdbcType="TIMESTAMP" />
+		<result column="summary_date_end" property="summary_date_end" jdbcType="TIMESTAMP" />
+		<result column="subject" property="subject" jdbcType="VARCHAR" />
+		<result column="amount_received" property="amount_received" jdbcType="DECIMAL" />
+		<result column="subject1" property="subject1" jdbcType="VARCHAR" />
+		<result column="received_no" property="received_no" jdbcType="VARCHAR" />
+		<result column="received_money" property="received_money" jdbcType="DECIMAL" />
+		<result column="discard_no" property="discard_no" jdbcType="VARCHAR" />
+		<result column="discard_money" property="discard_money" jdbcType="DECIMAL" />
+		<result column="rush_accounts_no" property="rush_accounts_no" jdbcType="VARCHAR" />
+		<result column="rush_accounts_money" property="rush_accounts_money" jdbcType="DECIMAL" />
+		<result column="reviewer" property="reviewer" jdbcType="VARCHAR" />
+		<result column="table_name" property="table_name" jdbcType="VARCHAR" />
+		<result column="table_date" property="table_date" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertOutpatient" parameterType="java.util.List">
+		insert into tab_outpatient (title,hospital_name,summary_date_begin,summary_date_end,
+		subject,amount_received,subject1,received_no,received_money,discard_no,discard_money,
+		rush_accounts_no,rush_accounts_money,reviewer,table_name,table_date)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.title},#{item.hospital_name},#{item.summary_date_begin},now(),#{item.subject},#{item.amount_received},#{item.subject1},#{item.received_no},
+			#{item.received_money},#{item.discard_no},#{item.discard_money},#{item.rush_accounts_no},#{item.rush_accounts_money},
+			#{item.reviewer},#{item.table_name},#{item.table_date})
+		</foreach>
+
+	</insert>
+
+	<select id="outpatientList" resultType="java.util.HashMap">
+		SELECT title,hospital_name,subject,
+		sum(amount_received)amount_received,
+		subject1,
+		sum(received_no)received_no,
+		sum(received_money)received_money,
+		sum(discard_no)discard_no,
+		sum(discard_money)discard_money,
+		sum(rush_accounts_no)rush_accounts_no,
+		sum(rush_accounts_money)rush_accounts_money
+ 			FROM tab_outpatient 
+ 			where  1=1
+		<include refid="ListWhere"></include>
+			group by title,hospital_name,subject,subject1
+	 		order by id
+ 
+	</select>
+	
+	<select id="outpatientListCount" resultType="int">
+		SELECT count(1) FROM tab_outpatient where 1=1
+		<include refid="ListWhere"></include>
+	</select>
+
+	<sql id="ListWhere">
+<!-- 		<if test="summary_date_begin!=null and summary_date_begin!='' and summary_date_end!=null and summary_date_end!=''"> -->
+			 and summary_date_begin between #{summary_date_begin} and #{summary_date_end}
+<!-- 		</if> -->
+			 and hospital_name =#{hospital_name}
+	</sql>
+
+</mapper>

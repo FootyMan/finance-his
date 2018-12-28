@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.dao.HisPatientDao">
+	<resultMap id="patientResultMap" type="com.erp.domain.HisPatientDO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="case_number" property="case_number" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="nature" property="nature" jdbcType="VARCHAR" />
+		<result column="patient_nature" property="patient_nature"
+			jdbcType="VARCHAR" />
+		<result column="invoice_number" property="invoice_number"
+			jdbcType="VARCHAR" />
+		<result column="yb_number" property="yb_number" jdbcType="VARCHAR" />
+		<result column="pay_type" property="pay_type" jdbcType="VARCHAR" />
+		<result column="visiting_time" property="visiting_time"
+			jdbcType="TIMESTAMP" />
+		<result column="charge_time" property="charge_time" jdbcType="TIMESTAMP" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="doctor" property="doctor" jdbcType="VARCHAR" />
+		<result column="diagnosis_msg" property="diagnosis_msg"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="inserthispatient" parameterType="java.util.List">
+		insert into his_patient (case_number, name,
+		sex,age,nature,patient_nature,invoice_number,yb_number,pay_type,visiting_time,
+		charge_time,amount,phone,department,doctor,diagnosis_msg)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.case_number},#{item.name},#{item.sex},#{item.age},#{item.nature},#{item.patient_nature},#{item.invoice_number},#{item.yb_number},#{item.pay_type},#{item.visiting_time},
+			#{item.charge_time},#{item.amount},#{item.phone},#{item.department},#{item.doctor},#{item.diagnosis_msg})
+		</foreach>
+
+	</insert>
+
+	<select id="patientList" resultMap="patientResultMap">
+		SELECT * FROM his_patient where 1=1
+		<include refid="ListWhere"></include>
+		order by id
+	</select>
+	
+	<select id="patientListCount" resultType="int">
+		SELECT count(1) FROM his_patient where 1=1
+		<include refid="ListWhere"></include>
+	</select>
+	
+		<!-- 统计 -->
+	<select id="sumpatientList" resultMap="patientResultMap">
+		SELECT 0 id,'合计'case_number,''name,''sex,''age,''nature,''patient_nature,''invoice_number,''yb_number ,
+		''pay_type,now()visiting_time,now() charge_time,sum(amount)amount,''phone,''department,''doctor,''diagnosis_msg
+		FROM his_patient where 1=1
+		<include refid="ListWhere"></include>
+	</select>
+
+	<sql id="ListWhere">
+		and charge_time between #{charge_date_begin} and #{charge_date_end}
+		<if test="pay_type!=null and pay_type!=''">
+			and pay_type=#{pay_type}
+		</if>
+	</sql>
+	
+	
+ 	<delete id="deletepatient">
+		delete from his_patient where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<!-- <update id="UpdateImageByImgId" parameterType="java.lang.Integer"> -->
+	<!-- update userimg set imgStatus=0 where imgId=#{imgId} -->
+	<!-- </update> -->
+</mapper>
