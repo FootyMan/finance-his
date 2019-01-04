@@ -59,6 +59,12 @@
 		<include refid="ListWhere"></include>
 	</select>
 
+	<select id="count" resultType="int">
+		select count(1) from tab_outpatient
+		   <where>  
+		  	<if test="summary_date_begin != null and summary_date_begin != ''"> and summary_date_begin = #{summary_date_begin} </if>
+		  </where>
+	</select>
 	<sql id="ListWhere">
 <!-- 		<if test="summary_date_begin!=null and summary_date_begin!='' and summary_date_end!=null and summary_date_end!=''"> -->
 			 and summary_date_begin between #{summary_date_begin} and #{summary_date_end}

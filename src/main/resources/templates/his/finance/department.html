@@ -35,16 +35,16 @@
 							<i class="fa fa-search" aria-hidden="true"></i>查询
 						</button>
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input id="department_name" type="text" class="form-control"
 							placeholder="科室" autocomplete="off">
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input class="form-control form_datetime" id="charge_date_end"
 							type="text" value="" size="16" autocomplete="off">
 
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input class="form-control form_datetime" id="charge_date_begin"
 							type="text" value="" size="16" autocomplete="off">
 
@@ -55,6 +55,13 @@
 							<option value="1">兴业口腔</option>
 							<option value="2">西红门门诊部</option>
 							<option value="3">生物医药基地门诊部</option>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<select id="countType" class="selectpicker"
+							data-done-button="true">
+							<option value="1">明细统计</option>
+							<option value="2">科室统计</option>
 						</select>
 					</div>
 					<!--startprint-->
@@ -83,7 +90,7 @@
 		</div>
 
 	</div>
-	
+
 	<div th:include="include::footer"></div>
 	<script src="/js/jquery.jqprint.js"></script>
 	<script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js";></script>
@@ -99,7 +106,7 @@
 	<script src="/js/plugins/clipboard/clipboard.min.js"></script>
 	<script src="/js/plugins/layer/layer.min.js"></script>
 
-	
+
 
 	<script type="text/javascript">
 		var clipboard = new Clipboard('button.copy', {
@@ -135,19 +142,20 @@
 		});
 		$(".selectpicker").selectpicker({
 			noneSelectedText : '请选择机构',
+			width : 150,
 			countSelectedText : function() {
 			}
 		});
 
 		function doPrint() {
 			$("#exampleTable").jqprint();
-// 			bdhtml = window.document.body.innerHTML;
-// 			sprnstr = "<!--startprint-->";
-// 			eprnstr = "<!--endprint-->";
-// 			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
-// 			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
-// 			window.document.body.innerHTML = prnhtml;
-// 			window.print();
+			// 			bdhtml = window.document.body.innerHTML;
+			// 			sprnstr = "<!--startprint-->";
+			// 			eprnstr = "<!--endprint-->";
+			// 			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+			// 			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+			// 			window.document.body.innerHTML = prnhtml;
+			// 			window.print();
 		}
 	</script>
 </body>

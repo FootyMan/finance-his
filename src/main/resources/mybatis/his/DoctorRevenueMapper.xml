@@ -87,6 +87,38 @@
 		</if>
 	</sql>
 	
+	
+	<!-- 统计 -->
+	<select id="sumdoctorListbydectorname" resultMap="doctorResultMap">
+		SELECT 
+		id,organization_name,department,job_number,doctor_name,
+        charge_date,
+        sum(treatment_fee)treatment_fee,
+        sum(radiological_fee)radiological_fee,
+        sum(operation_fee)operation_fee,
+        sum(inspection_fee)inspection_fee,
+		sum(check_fee)check_fee,
+        sum(medical_materials)medical_materials,
+        sum(dental_implant_fee)dental_implant_fee,
+        sum(orthodontic_fee)orthodontic_fee,
+        sum(planting_fee)planting_fee,
+		sum(pediatric_treatment_fee)pediatric_treatment_fee,
+        sum(western_medicine_fee)western_medicine_fee,
+        sum(chinese_patent_medicine)chinese_patent_medicine,
+		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,
+        sum(total_fee)total_fee
+		FROM doctor_revenue   where 1=1
+		<include refid="ListWhere"></include>
+		 group by department,doctor_name order by charge_date
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(1) from doctor_revenue
+		   <where>  
+		  	<if test="charge_date != null and charge_date != ''"> and charge_date = #{charge_date} </if>
+		  </where>
+	</select>
+	
 	<delete id="deletedoctor">
 		delete from doctor_revenue where id in
 		<foreach item="id" collection="array" open="(" separator=","

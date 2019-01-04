@@ -16,6 +16,7 @@ function load() {
 				doctor_name : $('#doctor_name').val(),
 				charge_date_begin : $('#charge_date_begin').val(),
 				charge_date_end : $('#charge_date_end').val(),
+				countType: $('#countType').val(),
 				organization_name:gethospital_name()
 			};
 		},
@@ -46,7 +47,17 @@ function load() {
 			{
 				field : 'charge_date',
 				title : '收费日期',
-				align : 'center'
+				align : 'center',
+                formatter:function(value,row,index){
+                    if(row.organization_name=="合计")
+                    {
+                    	return "";
+                    }
+                    else
+                    {
+                    	return row.charge_date.substring(0,10);
+                    }
+                  },
 			}, 
 		{
 				field : 'treatment_fee',

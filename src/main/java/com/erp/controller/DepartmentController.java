@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,25 +69,23 @@ public class DepartmentController extends BaseController {
 			fos = new FileOutputStream(new File(multipartFile.getOriginalFilename()));
 			in = multipartFile.getInputStream();
 
-			List<List<Object>> result=new ArrayList<List<Object>>();
+			List<List<Object>> result = new ArrayList<List<Object>>();
 			String fileName = file.getOriginalFilename();
-			//2003
+			// 2003
 			if (fileName.endsWith("xls")) {
-				result=POIUtils.readXlsx2003(in, 1, 18);
-			}
-			else
-			{
-				//2007
+				result = POIUtils.readXlsx2003(in, 1, 18);
+			} else {
+				// 2007
 				result = POIUtils.readXlsx(in, 1, 18);
 			}
-			  
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			List<DepartmentDO> list_dao = new ArrayList<>();
 
+			String charge_date="";
 			for (List<Object> list : result) {
 				DepartmentDO his_do = new DepartmentDO();
 				if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
-
 					his_do.setOrganization_name(list.get(1).toString());
 					his_do.setDepartment_name(list.get(2).toString());
 					his_do.setCharge_date(sdf.parse(list.get(3).toString()));
@@ -104,10 +103,20 @@ public class DepartmentController extends BaseController {
 					his_do.setChinese_patent_medicine(TransformationAmount(list.get(15)));
 					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(16)));
 					his_do.setTotal_fee(TransformationAmount(list.get(17)));
+					charge_date=list.get(3).toString();
 					list_dao.add(his_do);
 				}
 			}
-			departmentServiceImpl.insertDepartment(list_dao);
+			// 插入之前查询是否已存再当前收费日期记录
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("charge_date", charge_date);
+			int count = departmentServiceImpl.count(map);
+			if (count <= 0) {
+				departmentServiceImpl.insertDepartment(list_dao);
+			} else {
+				return R.error("当前收费日期已存在");
+			}
+
 		} catch (Exception e) {
 			return R.error();
 		} finally {
@@ -156,7 +165,14 @@ public class DepartmentController extends BaseController {
 			}
 			params.put("organization_name", strnig);
 		}
-		List<DepartmentDO> empReslist = departmentServiceImpl.departmentList(params);
+
+		List<DepartmentDO> empReslist = new ArrayList<DepartmentDO>();
+		// countType 1科室明细统计 2科室合并统计
+		if (params.get("countType").toString().equals("1")) {
+			empReslist = departmentServiceImpl.departmentList(params);
+		} else if (params.get("countType").toString().equals("2")) {
+			empReslist = departmentServiceImpl.sumdepartmentListbydepartment(params);
+		}
 		if (empReslist != null && empReslist.size() > 0) {
 			DepartmentDO sum_depart = departmentServiceImpl.sumdepartmentList(params);
 			empReslist.add(sum_depart);

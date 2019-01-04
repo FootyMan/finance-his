@@ -46,4 +46,19 @@ public class DoctorRevenueServiceImpl implements DoctorRevenueService {
 		return doctorRevenueDao.deletedoctor(id);
 	}
 
+	/**
+	 * 按医生和科室统计
+	 */
+	@Override
+	public List<DoctorRevenueDo> sumdoctorListbydectorname(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return doctorRevenueDao.sumdoctorListbydectorname(map);
+	}
+
+	@Override
+	public int count(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return doctorRevenueDao.count(map);
+	}
+
 }

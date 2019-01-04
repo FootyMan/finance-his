@@ -41,4 +41,17 @@ public interface DepartmentDao {
 	 * @return
 	 */
 	int deletedepartment(Long[] id);
+	/**
+	 * 按科室统计
+	 * @param map
+	 * @return
+	 */	
+	List<DepartmentDO> sumdepartmentListbydepartment(Map<String, Object> map);
+	/**
+	 * 查询count
+	 * @param map
+	 * @return
+	 */
+	int count(Map<String, Object> map);
+	
 }

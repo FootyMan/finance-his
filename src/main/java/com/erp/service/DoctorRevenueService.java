@@ -50,4 +50,18 @@ public interface DoctorRevenueService {
 	 */
 	int deletedoctor(Long[] id);
 
+	/**
+	 * 按医生和科室统计
+	 * 
+	 * @param map
+	 * @return
+	 */
+	List<DoctorRevenueDo> sumdoctorListbydectorname(Map<String, Object> map);
+	/**
+	 * 查询count
+	 * @param map
+	 * @return
+	 */
+	int count(Map<String, Object> map);
+
 }

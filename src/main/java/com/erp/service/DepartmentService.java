@@ -40,4 +40,17 @@ public interface DepartmentService {
 	 * @return
 	 */
 	int deletedepartment(Long[] userIds);
+	
+	/**
+	 * 按科室统计
+	 * @param map
+	 * @return
+	 */	
+	List<DepartmentDO> sumdepartmentListbydepartment(Map<String, Object> map);
+	/**
+	 * 查询count
+	 * @param map
+	 * @return
+	 */
+	int count(Map<String, Object> map);
 }

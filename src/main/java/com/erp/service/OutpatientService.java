@@ -28,4 +28,10 @@ public interface OutpatientService {
 	 * @return
 	 */
 	int outpatientListCount(Map<String, Object> map);
+	/**
+	 * 查询count
+	 * @param map
+	 * @return
+	 */
+	int count(Map<String, Object> map);
 }

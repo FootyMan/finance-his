@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +93,7 @@ public class OutpatientController extends BaseController {
 			String reviewer=tail_list.get(1).toString();//复核人
 			String table_name=tail_list.get(5).toString();//制表人
 			String table_date=tail_list.get(13).toString();//制表日期
+			String summary_date_begin="";
 			for (List<Object> list : result) {
 				//如果第一列有数据 则认为可读取 其他不读取
 				String onecell=list.get(0).toString();
@@ -102,7 +104,8 @@ public class OutpatientController extends BaseController {
 					his_do.setHospital_name(hospital);
 					String str_data=summary.replaceAll("汇总日期：", "").trim();
 					
-					his_do.setSummary_date_begin(sdf.parse(str_data.replace("年", "-").replaceAll("月", "-").replaceAll("日", "")));
+					summary_date_begin=str_data.replace("年", "-").replaceAll("月", "-").replaceAll("日", "");
+					his_do.setSummary_date_begin(sdf.parse(summary_date_begin));
 //					his_do.setSummary_date_end(sdf.parse(str_data[1].replace("年", "-").replaceAll("月", "-").replaceAll("日", "")));
 					his_do.setSubject(list.get(0).toString());
 					his_do.setAmount_received(TransformationAmount(list.get(2)));
@@ -140,7 +143,16 @@ public class OutpatientController extends BaseController {
 //				his_do.setTotal_fee(TransformationAmount(list.get(15)));
 				
 			}
-			outpatientServiceImpl.insertOutpatient(list_dao);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("summary_date_begin", summary_date_begin);
+			int count = outpatientServiceImpl.count(map);
+			if (count <= 0) {
+				outpatientServiceImpl.insertOutpatient(list_dao);
+			}
+			else {
+				return R.error("当前日期已存在");
+			}
+			
 		} catch (Exception e) {
 			return R.error();
 		} finally {

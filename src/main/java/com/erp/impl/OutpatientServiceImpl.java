@@ -62,4 +62,10 @@ public class OutpatientServiceImpl implements  OutpatientService{
 		return outpatientDao.outpatientListCount(map);
 	}
 
+	@Override
+	public int count(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return outpatientDao.count(map);
+	}
+
 }

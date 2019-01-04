@@ -66,12 +66,33 @@ function load() {
 		{
 			field : 'visiting_time',
 			title : '出诊时间',
-			align : 'center'
+			align : 'center',
+            formatter:function(value,row,index){
+                if(row.case_number=="合计")
+                {
+                	return "";
+                }
+                else
+                {
+                	return row.visiting_time;
+                }
+              },
 		}, {
 			title : '收费时间',
 			field : 'charge_time',
 			align : 'center',
-		}, {
+            formatter:function(value,row,index){
+                if(row.case_number=="合计")
+                {
+                	return "";
+                }
+                else
+                {
+                	return row.charge_time;
+                }
+              },
+		}, 
+		{
 			field : 'amount',
 			title : '金额',
 			align : 'center'

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,20 +67,19 @@ public class DoctorController extends BaseController {
 			MultipartFile multipartFile = params.getFile("file");
 			fos = new FileOutputStream(new File(multipartFile.getOriginalFilename()));
 			in = multipartFile.getInputStream();
-			List<List<Object>> result=new ArrayList<List<Object>>();
+			List<List<Object>> result = new ArrayList<List<Object>>();
 			String fileName = file.getOriginalFilename();
-			//2003
+			// 2003
 			if (fileName.endsWith("xls")) {
-				result=POIUtils.readXlsx2003(in, 1, 20);
-			}
-			else
-			{
-				//2007
+				result = POIUtils.readXlsx2003(in, 1, 20);
+			} else {
+				// 2007
 				result = POIUtils.readXlsx(in, 1, 20);
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			List<DoctorRevenueDo> list_dao = new ArrayList<>();
 
+			String charge_date="";
 			for (List<Object> list : result) {
 				if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
 					DoctorRevenueDo his_do = new DoctorRevenueDo();
@@ -102,10 +102,20 @@ public class DoctorController extends BaseController {
 					his_do.setWestern_medicine_fee(TransformationAmount(list.get(17)));
 					his_do.setChinese_patent_medicine(TransformationAmount(list.get(18)));
 					his_do.setTotal_fee(TransformationAmount(list.get(19)));
+					charge_date=list.get(5).toString();
 					list_dao.add(his_do);
 				}
 			}
-			doctorRevenueServiceImpl.insertdoctor(list_dao);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("charge_date", charge_date);
+			int count = doctorRevenueServiceImpl.count(map);
+			if (count<=0) {
+				doctorRevenueServiceImpl.insertdoctor(list_dao);
+			}
+			else {
+				return R.error("当前收费日期已存在");
+			}
+			
 		} catch (Exception e) {
 			return R.error();
 		} finally {
@@ -138,12 +148,12 @@ public class DoctorController extends BaseController {
 	@GetMapping("/doctor")
 	@ResponseBody
 	List<DoctorRevenueDo> doctor(@RequestParam Map<String, Object> params) {
-		
+
 		if (params.containsKey("organization_name")) {
 			List<String> strnig = new ArrayList<String>();
 			String org = params.get("organization_name").toString();
 			if (StringUtils.isNotEmpty(org)) {
-				if (org.indexOf(",")>0) {
+				if (org.indexOf(",") > 0) {
 					String[] str_split = org.split(",");
 					for (int i = 0; i < str_split.length; i++) {
 						strnig.add(str_split[i]);
@@ -154,7 +164,13 @@ public class DoctorController extends BaseController {
 			}
 			params.put("organization_name", strnig);
 		}
-		List<DoctorRevenueDo> empReslist = doctorRevenueServiceImpl.doctorList(params);
+		List<DoctorRevenueDo> empReslist = new ArrayList<DoctorRevenueDo>();
+		// countType 1医生明细统计 2科室和医生统计
+		if (params.get("countType").toString().equals("1")) {
+			empReslist = doctorRevenueServiceImpl.doctorList(params);
+		} else if (params.get("countType").toString().equals("2")) {
+			empReslist = doctorRevenueServiceImpl.sumdoctorListbydectorname(params);
+		}
 		if (empReslist != null && empReslist.size() > 0) {
 			DoctorRevenueDo sum_doctor = doctorRevenueServiceImpl.sumdoctorList(params);
 			empReslist.add(sum_doctor);

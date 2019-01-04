@@ -35,16 +35,16 @@
 							<i class="fa fa-search" aria-hidden="true"></i>查询
 						</button>
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input id="doctor_name" type="text" class="form-control"
 							placeholder="医生" autocomplete="off">
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input class="form-control form_datetime" id="charge_date_end"
 							type="text" value="" size="16" autocomplete="off">
 
 					</div>
-					<div class="pull-right search col-md-2 nopadding">
+					<div class="pull-right search col-md-1 nopadding">
 						<input class="form-control form_datetime" id="charge_date_begin"
 							type="text" value="" size="16" autocomplete="off">
 
@@ -55,6 +55,13 @@
 							<option value="1">兴业口腔</option>
 							<option value="2">西红门门诊部</option>
 							<option value="3">生物医药基地门诊部</option>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<select id="countType" class="selectpicker"
+							data-done-button="true">
+							<option value="1">明细统计</option>
+							<option value="2">医生统计</option>
 						</select>
 					</div>
 					<!--startprint-->
@@ -131,6 +138,7 @@
 		});
 		$(".selectpicker").selectpicker({
 			noneSelectedText : '请选择机构',
+			width : 150,
 			countSelectedText : function() {
 			}
 		});

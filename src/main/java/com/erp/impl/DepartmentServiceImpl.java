@@ -47,4 +47,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDao.deletedepartment(id);
 	}
 
+	/**
+	 * 按科室统计
+	 */
+	@Override
+	public List<DepartmentDO> sumdepartmentListbydepartment(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return departmentDao.sumdepartmentListbydepartment(map);
+	}
+
+	@Override
+	public int count(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return departmentDao.count(map);
+	}
+
 }

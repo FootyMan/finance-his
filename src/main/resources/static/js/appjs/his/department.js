@@ -16,6 +16,7 @@ function load() {
 				department_name : $('#department_name').val(),
 				charge_date_begin : $('#charge_date_begin').val(),
 				charge_date_end : $('#charge_date_end').val(),
+				countType: $('#countType').val(),
 				organization_name:gethospital_name()
 			};
 		},
@@ -37,11 +38,16 @@ function load() {
 			field : 'charge_date', // 列字段名
 			title : '收费日期',// 列标题
 			align : 'center',
-//			formatter : function(value, row, index) {
-//				if (row.charge_date != "") {
-//					return row.charge_date.substring(0, 10);
-//				}
-//			},
+            formatter:function(value,row,index){
+                if(row.organization_name=="合计")
+                {
+                	return "";
+                }
+                else
+                {
+                	return row.charge_date.substring(0,10);
+                }
+              },
 		},
 
 		{

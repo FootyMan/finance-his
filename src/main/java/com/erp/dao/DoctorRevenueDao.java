@@ -12,32 +12,55 @@ public interface DoctorRevenueDao {
 
 	/**
 	 * 插入数据
+	 * 
 	 * @param patient
 	 * @return
 	 */
 	int insertdoctor(List<DoctorRevenueDo> patient);
+
 	/**
 	 * 查询数据
+	 * 
 	 * @param map
 	 * @return
 	 */
 	List<DoctorRevenueDo> doctorList(Map<String, Object> map);
+
+	/**
+	 * 查询count
+	 * 
+	 * @param map
+	 * @return
+	 */
+	int doctorListCount(Map<String, Object> map);
+
+	/**
+	 * 统计
+	 * 
+	 * @param map
+	 * @return
+	 */
+	List<DoctorRevenueDo> sumdoctorList(Map<String, Object> map);
+
+	/**
+	 * 删除
+	 * 
+	 * @param userIds
+	 * @return
+	 */
+	int deletedoctor(Long[] id);
+
+	/**
+	 * 按医生和科室统计
+	 * 
+	 * @param map
+	 * @return
+	 */
+	List<DoctorRevenueDo> sumdoctorListbydectorname(Map<String, Object> map);
 	/**
 	 * 查询count
 	 * @param map
 	 * @return
 	 */
-	int doctorListCount(Map<String, Object> map);
-	/**
-	 * 统计
-	 * @param map
-	 * @return
-	 */
-	List<DoctorRevenueDo> sumdoctorList(Map<String, Object> map);
-	/**
-	 * 删除
-	 * @param userIds
-	 * @return
-	 */
-	int deletedoctor(Long[] id); 
+	int count(Map<String, Object> map);
 }
