@@ -65,8 +65,24 @@
 						</select>
 					</div>
 					<!--startprint-->
-					<table id="exampleTable" data-mobile-responsive="true">
-					</table>
+					<div id="print_div">
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<span><h4 id="h_date">
+										<h4></span>
+							</div>
+						</div>
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+						<div>
+							<span style="display: inline-block; width: 30%"> 复核人：<span
+								id="span_fhr"></span>
+							</span> <span
+								style="display: inline-block; width: 30%; text-align: center">
+								制表人：<span id="span_zbr"></span>
+							</span>
+						</div>
+					</div>
 					<!--endprint-->
 				</div>
 			</div>
@@ -148,7 +164,7 @@
 		});
 
 		function doPrint() {
-			$("#exampleTable").jqprint();
+			$("#print_div").jqprint();
 			// 			bdhtml = window.document.body.innerHTML;
 			// 			sprnstr = "<!--startprint-->";
 			// 			eprnstr = "<!--endprint-->";

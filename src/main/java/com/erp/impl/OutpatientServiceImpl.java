@@ -44,6 +44,8 @@ public class OutpatientServiceImpl implements  OutpatientService{
 			dto.setDiscard_money(Double.parseDouble(item.get("discard_money").toString()));
 			dto.setRush_accounts_no(item.get("rush_accounts_no").toString());
 			dto.setRush_accounts_money(Double.parseDouble(item.get("rush_accounts_money").toString()));
+			dto.setTable_name(item.get("table_name").toString());
+			dto.setReviewer(item.get("reviewer").toString());
 			try {
 				dto.setSummary_date_begin(simpleDateFormat.parse(map.get("summary_date_begin").toString()));
 				dto.setSummary_date_end(simpleDateFormat.parse(map.get("summary_date_end").toString()));

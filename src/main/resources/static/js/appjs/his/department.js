@@ -11,6 +11,8 @@ function load() {
         dataType: "json",
         cache: false,
         url:prefix + "/list",
+		sortable: true,                     //是否启用排序
+		sortOrder: "asc",                   //排序方式
 		queryParams : function(params) {
 			return {
 				department_name : $('#department_name').val(),
@@ -32,7 +34,8 @@ function load() {
 		{
 			field : 'department_name', // 列字段名
 			title : '科室',// 列标题
-			align : 'center'
+			align : 'center',
+			sortable: true,
 		}
 		, {
 			field : 'charge_date', // 列字段名
@@ -107,9 +110,25 @@ function load() {
 			title : '合计',
 			align : 'center'
 		}, ],
-		 onLoadSuccess(data)
+		   onLoadSuccess(data)
 	        {
-			console.log(data);
+				if(data!=''){
+		        	 if($('#countType').val()=="1")
+		        	 {
+		        		 $('#exampleTable').bootstrapTable('showColumn', 'charge_date');
+		        	 }
+		        	 else
+		        	 {
+		        		 $('#exampleTable').bootstrapTable('hideColumn', 'charge_date');
+			        		var charge_date_begin= $('#charge_date_begin').val();
+			        		var charge_date_end=$('#charge_date_end').val();
+			        		if(charge_date_begin!='' && charge_date_end!='')
+			        		{
+			        			 $("#h_date").html("汇总日期："+charge_date_begin+'-'+charge_date_end);
+			        		}
+		        	 }
+		        	 $("#span_zbr").html(data[0].table_name);
+	        	}
 	        }
 	});
 }

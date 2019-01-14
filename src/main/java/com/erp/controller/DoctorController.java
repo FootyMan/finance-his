@@ -102,6 +102,7 @@ public class DoctorController extends BaseController {
 					his_do.setWestern_medicine_fee(TransformationAmount(list.get(17)));
 					his_do.setChinese_patent_medicine(TransformationAmount(list.get(18)));
 					his_do.setTotal_fee(TransformationAmount(list.get(19)));
+					his_do.setTable_name(getUsername());
 					charge_date=list.get(5).toString();
 					list_dao.add(his_do);
 				}

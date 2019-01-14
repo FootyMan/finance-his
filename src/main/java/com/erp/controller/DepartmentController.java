@@ -103,6 +103,7 @@ public class DepartmentController extends BaseController {
 					his_do.setChinese_patent_medicine(TransformationAmount(list.get(15)));
 					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(16)));
 					his_do.setTotal_fee(TransformationAmount(list.get(17)));
+					his_do.setTable_name(getUsername());
 					charge_date=list.get(3).toString();
 					list_dao.add(his_do);
 				}

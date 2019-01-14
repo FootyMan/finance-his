@@ -34,6 +34,7 @@
 		<result column="pediatric_treatment_fee2" property="pediatric_treatment_fee2"
 			jdbcType="DECIMAL" />
 		<result column="total_fee" property="total_fee" jdbcType="DECIMAL" />
+		<result column="table_name" property="table_name" jdbcType="VARCHAR" />
 
 	</resultMap>
 
@@ -41,12 +42,13 @@
 		insert into tab_department
 		(organization_name,department_name,charge_date,treatment_fee,radiological_fee,
 		operation_fee,inspection_fee,check_fee,medical_materials,dental_implant_fee,orthodontic_fee,planting_fee,pediatric_treatment_fee,
-		western_medicine_fee,chinese_patent_medicine,pediatric_treatment_fee2,total_fee)
+		western_medicine_fee,chinese_patent_medicine,pediatric_treatment_fee2,total_fee,table_name)
 		values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(#{item.organization_name},#{item.department_name},#{item.charge_date},#{item.treatment_fee},#{item.radiological_fee},#{item.operation_fee},#{item.inspection_fee},#{item.check_fee},#{item.medical_materials},
-			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.pediatric_treatment_fee2},#{item.total_fee})
+			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.pediatric_treatment_fee2},#{item.total_fee},
+			#{item.table_name})
 		</foreach>
 
 	</insert>
@@ -57,7 +59,7 @@
 		id,'合计'organization_name,''department_name,now() charge_date,sum(treatment_fee)treatment_fee,sum(radiological_fee)radiological_fee,sum(operation_fee)operation_fee,sum(inspection_fee)inspection_fee,
 		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
 		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
-		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee
+		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 	</select>
@@ -65,7 +67,7 @@
 	<select id="departmentList" resultMap="doctorResultMap">
 		SELECT * FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
-		order by id
+		order by charge_date
 
 	</select>
 
@@ -94,7 +96,7 @@
 		id,organization_name,department_name,charge_date,sum(treatment_fee)treatment_fee,sum(radiological_fee)radiological_fee,sum(operation_fee)operation_fee,sum(inspection_fee)inspection_fee,
 		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
 		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
-		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee
+		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 		group by department_name order by charge_date

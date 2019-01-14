@@ -7,124 +7,128 @@ $(function() {
 function load() {
 	$('#exampleTable').bootstrapTable({
 		url : prefix + "/doctor", // 服务器数据的加载地址
-        dataType: "json",
-        method: 'get',
-        dataType: "json",
-        cache: false,
+		dataType : "json",
+		method : 'get',
+		dataType : "json",
+		cache : false,
+		sortable: true,                     //是否启用排序
+		sortOrder: "asc",                   //排序方式
 		queryParams : function(params) {
 			return {
 				doctor_name : $('#doctor_name').val(),
 				charge_date_begin : $('#charge_date_begin').val(),
 				charge_date_end : $('#charge_date_end').val(),
-				countType: $('#countType').val(),
-				organization_name:gethospital_name()
+				countType : $('#countType').val(),
+				organization_name : gethospital_name()
 			};
 		},
-		columns : [ 
-			{
-				checkbox : true
+		columns : [ {
+			checkbox : true
+		}, {
+			field : 'organization_name', // 列字段名
+			title : '机构',// 列标题
+			align : 'center'
+		}, {
+			field : 'department', // 列字段名
+			title : '科室名称',// 列标题
+			align : 'center',
+			sortable: true,
+		}, {
+			field : 'job_number',
+			title : '工号',
+			align : 'center'
+		}, {
+			field : 'doctor_name',
+			title : '医生名称',
+			align : 'center',
+			sortable: true,
+		}, {
+			field : 'charge_date',
+			title : '收费日期',
+			align : 'center',
+			formatter : function(value, row, index) {
+				if (row.organization_name == "合计") {
+					return "";
+				} else {
+					return row.charge_date.substring(0, 10);
+				}
 			},
-			{
-				field : 'organization_name', // 列字段名
-				title : '机构',// 列标题
-				align : 'center'
-			},
-			{
-				field : 'department', // 列字段名
-				title : '科室名称',// 列标题
-				align : 'center'
-			},
-			{
-				field : 'job_number',
-				title : '工号',
-				align : 'center'
-			},
-			{
-				field : 'doctor_name',
-				title : '医生名称',
-				align : 'center'
-			}, 
-			{
-				field : 'charge_date',
-				title : '收费日期',
-				align : 'center',
-                formatter:function(value,row,index){
-                    if(row.organization_name=="合计")
-                    {
-                    	return "";
-                    }
-                    else
-                    {
-                    	return row.charge_date.substring(0,10);
-                    }
-                  },
-			}, 
-		{
-				field : 'treatment_fee',
-				title : '治疗费',
-				align : 'center'
-		},
-		{
-				title : '放射费',
-				field : 'radiological_fee',
-				align : 'center',
-		 },
-		 {
-				field : 'operation_fee',
-				title : '手术费',
-				align : 'center'
-		},
-		 {
-				field : 'inspection_fee',
-				title : '检验费',
-				align : 'center'
-		 },
-		 {
-				field : 'check_fee',
-				title : '检查费',
-				align : 'center'
-		},
-		 {
-				field : 'medical_materials',
-				title : '用材',
-				align : 'center'
-		 },
-		 {
-				field : 'dental_implant_fee',
-				title : '镶牙费',
-				align : 'center'
-		 },
-		 {
-				field : 'orthodontic_fee',
-				title : '正畸费',
-				align : 'center'
-		 },
-		 {
-				field : 'planting_fee',
-				title : '种植费',
-				align : 'center'
-		 },
-		 {
-				field : 'pediatric_treatment_fee',
-				title : '儿科治疗费',
-				align : 'center'
-		 },
-		 {
-				field : 'western_medicine_fee',
-				title : '西药费',
-				align : 'center'
-		 },
-		 {
-				field : 'chinese_patent_medicine',
-				title : '中成药',
-				align : 'center'
-		 },
-		 {
-				field : 'total_fee',
-				title : '合计',
-				align : 'center'
-		 },
-		]
+		}, {
+			field : 'treatment_fee',
+			title : '治疗费',
+			align : 'center'
+		}, {
+			title : '放射费',
+			field : 'radiological_fee',
+			align : 'center',
+		}, {
+			field : 'operation_fee',
+			title : '手术费',
+			align : 'center'
+		}, {
+			field : 'inspection_fee',
+			title : '检验费',
+			align : 'center'
+		}, {
+			field : 'check_fee',
+			title : '检查费',
+			align : 'center'
+		}, {
+			field : 'medical_materials',
+			title : '用材',
+			align : 'center'
+		}, {
+			field : 'dental_implant_fee',
+			title : '镶牙费',
+			align : 'center'
+		}, {
+			field : 'orthodontic_fee',
+			title : '正畸费',
+			align : 'center'
+		}, {
+			field : 'planting_fee',
+			title : '种植费',
+			align : 'center'
+		}, {
+			field : 'pediatric_treatment_fee',
+			title : '儿科治疗费',
+			align : 'center'
+		}, {
+			field : 'western_medicine_fee',
+			title : '西药费',
+			align : 'center'
+		}, {
+			field : 'chinese_patent_medicine',
+			title : '中成药',
+			align : 'center'
+		}, {
+			field : 'total_fee',
+			title : '合计',
+			align : 'center'
+		}, ],
+		   onLoadSuccess(data)
+	        {
+				console.log(data);
+	        	if(data!=''){
+		        	 if($('#countType').val()=="1")
+		        	 {
+		        		 $('#exampleTable').bootstrapTable('showColumn', 'charge_date');
+		        	 }
+		        	 else
+		        	 {
+		        		 $('#exampleTable').bootstrapTable('hideColumn', 'charge_date');
+		        		var charge_date_begin= $('#charge_date_begin').val();
+		        		var charge_date_end=$('#charge_date_end').val();
+		        		if(charge_date_begin!='' && charge_date_end!='')
+		        		{
+		        			 $("#h_date").html("汇总日期："+charge_date_begin+'-'+charge_date_end);
+		        		}
+		        	 }
+			        //$("#span_fhr").html(data.rows[0].reviewer);
+			        $("#span_zbr").html(data[0].table_name);
+	        	}
+	        }
+		
 	});
 }
 function reLoad() {
@@ -164,35 +168,34 @@ function batchRemove() {
 	});
 }
 
-
 function selectLoad() {
 	var html = "";
-			// 加载数据
-// for (var i = 0; i < data.length; i++) {
-// html += '<option value="' + data[i].type + '">' + data[i].description +
-// '</option>'
-// }
-			html += '<option value="1">普通会员</option>';
-			html += '<option value="2">月度会员</option>';
-			html += '<option value="3">半年会员</option>';
-			html += '<option value="4">年度会员</option>';
-			$(".chosen-select").append(html);
-			$(".chosen-select").chosen({
-				maxHeight : 200
-			});
-			// 点击事件
-			$('.chosen-select').on('change', function(e, params) {
-				console.log(params.selected);
-				var opt = {
-					query : {
-						userLevel : params.selected,
-					}
-				}
-				$('#exampleTable').bootstrapTable('refresh', opt);
-			});
+	// 加载数据
+	// for (var i = 0; i < data.length; i++) {
+	// html += '<option value="' + data[i].type + '">' + data[i].description +
+	// '</option>'
+	// }
+	html += '<option value="1">普通会员</option>';
+	html += '<option value="2">月度会员</option>';
+	html += '<option value="3">半年会员</option>';
+	html += '<option value="4">年度会员</option>';
+	$(".chosen-select").append(html);
+	$(".chosen-select").chosen({
+		maxHeight : 200
+	});
+	// 点击事件
+	$('.chosen-select').on('change', function(e, params) {
+		console.log(params.selected);
+		var opt = {
+			query : {
+				userLevel : params.selected,
+			}
+		}
+		$('#exampleTable').bootstrapTable('refresh', opt);
+	});
 }
 
-//编辑用户初始化
+// 编辑用户初始化
 function edit(id) {
 	layer.open({
 		type : 2,
@@ -203,7 +206,7 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-//设置首页用户
+// 设置首页用户
 function setHome() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
@@ -234,16 +237,16 @@ function setHome() {
 				}
 			}
 		});
-	}, function() {});
+	}, function() {
+	});
 }
 
-
-//设置用户级别
-function setUserLevel(userId,type){
-	var httpUrl = prefix+'/setmember/'+userId+'/'+type;
+// 设置用户级别
+function setUserLevel(userId, type) {
+	var httpUrl = prefix + '/setmember/' + userId + '/' + type;
 	$.ajax({
-		type:'get',
-		url:httpUrl,
+		type : 'get',
+		url : httpUrl,
 		error : function(request) {
 			parent.layer.alert("Connection error");
 		},
@@ -251,8 +254,9 @@ function setUserLevel(userId,type){
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
 				reLoad();
-//				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-//				parent.layer.close(index);
+				// var index = parent.layer.getFrameIndex(window.name); //
+				// 获取窗口索引
+				// parent.layer.close(index);
 
 			} else {
 				parent.layer.alert(data.msg)
@@ -262,13 +266,13 @@ function setUserLevel(userId,type){
 	});
 }
 
-//禁用-启用
-function setisDisable(userId,type){
-	var httpUrl = prefix+'/disable/'+userId+'/'+type;
+// 禁用-启用
+function setisDisable(userId, type) {
+	var httpUrl = prefix + '/disable/' + userId + '/' + type;
 	$.ajax({
-		type:'get',
-		async:false,
-		url:httpUrl,
+		type : 'get',
+		async : false,
+		url : httpUrl,
 		error : function(request) {
 			parent.layer.alert("Connection error");
 		},
@@ -276,9 +280,10 @@ function setisDisable(userId,type){
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
 				reLoad();
-//				parent.reLoad();
-//				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-//				parent.layer.close(index);
+				// parent.reLoad();
+				// var index = parent.layer.getFrameIndex(window.name); //
+				// 获取窗口索引
+				// parent.layer.close(index);
 
 			} else {
 				parent.layer.alert(data.msg)
@@ -288,19 +293,20 @@ function setisDisable(userId,type){
 	});
 }
 
-function gethospital_name()
-{
+function gethospital_name() {
 	var country_name = "";
-	for(var i=0;i<$("#organization_name").find("option:selected").length;i++){
-	    if(i==0){
-	        country_name = $("#organization_name").find("option:selected")[i].innerText;
-	    }else{
-	        country_name = country_name + ',' + $("#organization_name").find("option:selected")[i].innerText;
-	    }
+	for (var i = 0; i < $("#organization_name").find("option:selected").length; i++) {
+		if (i == 0) {
+			country_name = $("#organization_name").find("option:selected")[i].innerText;
+		} else {
+			country_name = country_name
+					+ ','
+					+ $("#organization_name").find("option:selected")[i].innerText;
+		}
 	}
 	return country_name;
 }
-//编辑用户初始化
+// 编辑用户初始化
 function info(id) {
 	layer.open({
 		type : 2,

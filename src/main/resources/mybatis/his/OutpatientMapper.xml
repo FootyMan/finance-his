@@ -37,7 +37,7 @@
 	</insert>
 
 	<select id="outpatientList" resultType="java.util.HashMap">
-		SELECT title,hospital_name,subject,
+		SELECT title,hospital_name,subject,reviewer,table_name,
 		sum(amount_received)amount_received,
 		subject1,
 		sum(received_no)received_no,

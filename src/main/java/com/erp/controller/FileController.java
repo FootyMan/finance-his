@@ -131,9 +131,7 @@ public class FileController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("common:remove")
 	public R remove(@RequestParam("ids[]") Long[] ids) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
+	 
 		sysFileService.batchRemove(ids);
 		return R.ok();
 	}
@@ -141,9 +139,7 @@ public class FileController extends BaseController {
 	@ResponseBody
 	@PostMapping("/upload")
 	R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
+		 
 		String fileName = file.getOriginalFilename();
 		fileName = FileUtil.renameToUUID(fileName);
 		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());

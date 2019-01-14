@@ -29,6 +29,7 @@ public class DoctorRevenueDo {
 	private double western_medicine_fee;
 	private double chinese_patent_medicine;
 	private double total_fee;
+	private String table_name;
 	public int getId() {
 		return id;
 	}
@@ -148,6 +149,12 @@ public class DoctorRevenueDo {
 	}
 	public void setOrganization_name(String organization_name) {
 		this.organization_name = organization_name;
+	}
+	public String getTable_name() {
+		return table_name;
+	}
+	public void setTable_name(String table_name) {
+		this.table_name = table_name;
 	}
 	 
 }
