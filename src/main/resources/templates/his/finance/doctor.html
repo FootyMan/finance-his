@@ -160,14 +160,15 @@
 		});
 
 		function doPrint() {
-			$("#print_div").jqprint();
-			// 			bdhtml = window.document.body.innerHTML;
-			// 			sprnstr = "<!--startprint-->";
-			// 			eprnstr = "<!--endprint-->";
-			// 			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
-			// 			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
-			// 			window.document.body.innerHTML = prnhtml;
-			// 			window.print();
+			//$("#print_div").jqprint();
+			bdhtml = window.document.body.innerHTML;
+			sprnstr = "<!--startprint-->";
+			eprnstr = "<!--endprint-->";
+			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+			window.document.body.innerHTML = prnhtml;
+			window.print();
+			window.location.reload();//重新给页面内容赋值；
 		}
 	</script>
 </body>
