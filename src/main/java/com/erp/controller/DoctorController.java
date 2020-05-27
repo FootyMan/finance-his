@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Null;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,7 @@ public class DoctorController extends BaseController {
 
 	@Autowired
 	private DoctorRevenueServiceImpl doctorRevenueServiceImpl;
+	private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
 
 	@GetMapping()
 	@RequiresPermissions("his:Doctor:list")
@@ -61,6 +64,7 @@ public class DoctorController extends BaseController {
 	R DoctorUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws ParseException {
 		InputStream in = null;
 		FileOutputStream fos = null;
+		List<DoctorRevenueDo> list_dao = new ArrayList<>();
 		try {
 
 			MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
@@ -71,39 +75,53 @@ public class DoctorController extends BaseController {
 			String fileName = file.getOriginalFilename();
 			// 2003
 			if (fileName.endsWith("xls")) {
-				result = POIUtils.readXlsx2003(in, 1, 20);
+				result = POIUtils.readXlsx2003(in, 1, 29);
 			} else {
 				// 2007
-				result = POIUtils.readXlsx(in, 1, 20);
+				result = POIUtils.readXlsx(in, 1, 29);
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			List<DoctorRevenueDo> list_dao = new ArrayList<>();
 
 			String charge_date="";
 			for (List<Object> list : result) {
 				if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
 					DoctorRevenueDo his_do = new DoctorRevenueDo();
-					his_do.setOrganization_name(list.get(1).toString());
-					his_do.setDepartment(list.get(2).toString());
-					his_do.setJob_number(list.get(3).toString());
-					his_do.setDoctor_name(list.get(4).toString());
-					his_do.setCharge_date(sdf.parse(list.get(5).toString()));
-					his_do.setTreatment_fee(TransformationAmount(list.get(6)));
-					his_do.setRadiological_fee(TransformationAmount(list.get(7)));
-					his_do.setOperation_fee(TransformationAmount(list.get(8)));
-					his_do.setInspection_fee(TransformationAmount(list.get(9)));
-					his_do.setCheck_fee(TransformationAmount(list.get(10)));
-					his_do.setMedical_materials(TransformationAmount(list.get(11)));
-					his_do.setDental_implant_fee(TransformationAmount(list.get(12)));
-					his_do.setOrthodontic_fee(TransformationAmount(list.get(13)));
-					his_do.setPlanting_fee(TransformationAmount(list.get(14)));
-					his_do.setPediatric_treatment_fee(TransformationAmount(list.get(15)));
-					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(16)));
-					his_do.setWestern_medicine_fee(TransformationAmount(list.get(17)));
-					his_do.setChinese_patent_medicine(TransformationAmount(list.get(18)));
-					his_do.setTotal_fee(TransformationAmount(list.get(19)));
+					his_do.setOrganization_name(list.get(1).toString());//机构
+					his_do.setDepartment(list.get(2).toString());//科室
+					his_do.setJob_number(list.get(3).toString());//工号
+					his_do.setDoctor_name(list.get(4).toString());//医生名称
+					his_do.setCharge_date(sdf.parse(list.get(5).toString()));//收费日期
+					his_do.setCheckList(TransformationAmount(list.get(6)));//检验单
+					his_do.setTreatment_fee(TransformationAmount(list.get(7)));//治疗费
+					his_do.setRadiological_fee(TransformationAmount(list.get(8)));//放射费
+					his_do.setOperation_fee(TransformationAmount(list.get(9)));//手术费
+					his_do.setMaterialCost(TransformationAmount(list.get(10)));//材料费
+					his_do.setAnesthesiaCost(TransformationAmount(list.get(11)));//麻醉费
+					his_do.setInspection_fee(TransformationAmount(list.get(12)));//检验费
+
+					his_do.setZjMaterialCost(TransformationAmount(list.get(13)));//正畸材料费
+					his_do.setMedical_materials(TransformationAmount(list.get(14)));//治疗用一次性医用材料
+					his_do.setCheckMedicalMaterials(TransformationAmount(list.get(15)));//检查一次性医药用材
+					his_do.setDental_implant_fee(TransformationAmount(list.get(16)));//镶牙费
+					his_do.setOrthodontic_fee(TransformationAmount(list.get(17)));//正畸费
+					his_do.setPlanting_fee(TransformationAmount(list.get(18)));//种植材料费
+					his_do.setPediatric_treatment_fee(TransformationAmount(list.get(19)));//儿科治疗费
+					his_do.setPlantingMaterialCost(TransformationAmount(list.get(20)));//种植材料费
+					his_do.setSubtotalMedicalTreatment(TransformationAmount(list.get(21)));//医疗小计
+					his_do.setWestern_medicine_fee(TransformationAmount(list.get(22)));//西药费
+					his_do.setChinese_patent_medicine(TransformationAmount(list.get(23)));//中成药
+					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(24)));//儿科治疗费2
+					his_do.setSubtotalDrugs(TransformationAmount(list.get(25)));//药品小计
+					his_do.setTotal_fee(TransformationAmount(list.get(26)));//合计
+					his_do.setTotalPocket(TransformationAmount(list.get(27)));//自付合计
+					his_do.setTotalReceivables(TransformationAmount(list.get(28)));//应收合计
+
+					//
+
+					//his_do.setCheck_fee(TransformationAmount(list.get(10)));
+					//his_do.setMedical_materials(TransformationAmount(list.get(11)));
 					his_do.setTable_name(getUsername());
-					charge_date=list.get(5).toString();
+					charge_date = list.get(5).toString();
 					list_dao.add(his_do);
 				}
 			}
@@ -118,6 +136,8 @@ public class DoctorController extends BaseController {
 			}
 			
 		} catch (Exception e) {
+			log.error(list_dao.size() + "");
+			log.error("doctor_upload.error", e);
 			return R.error();
 		} finally {
 			if (in != null) {

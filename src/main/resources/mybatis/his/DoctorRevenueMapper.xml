@@ -24,19 +24,33 @@
 		<result column="chinese_patent_medicine" property="chinese_patent_medicine" jdbcType="DECIMAL" />
 		<result column="total_fee" property="total_fee" jdbcType="DECIMAL" />
 		<result column="table_name" property="table_name" jdbcType="VARCHAR" />
+
+		<result column="material_cost" property="materialCost" jdbcType="DECIMAL" />
+		<result column="anesthesia_cost" property="anesthesiaCost" jdbcType="DECIMAL" />
+		<result column="zj_material_cost" property="zjMaterialCost" jdbcType="DECIMAL" />
+		<result column="check_medical_materials" property="checkMedicalMaterials" jdbcType="DECIMAL" />
+		<result column="planting_material_cost" property="plantingMaterialCost" jdbcType="DECIMAL" />
+		<result column="subtotal_medical_treatment" property="subtotalMedicalTreatment" jdbcType="DECIMAL" />
+		<result column="subtotal_drugs" property="subtotalDrugs" jdbcType="DECIMAL" />
+		<result column="total_pocket" property="totalPocket" jdbcType="DECIMAL" />
+		<result column="total_receivables" property="totalReceivables" jdbcType="DECIMAL" />
+		<result column="check_list" property="checkList" jdbcType="DECIMAL" />
+
 		 
 	</resultMap>
 
 	<insert id="insertdoctor" parameterType="java.util.List">
 		insert into doctor_revenue (organization_name,department, job_number,doctor_name,charge_date,treatment_fee,radiological_fee,
 		operation_fee,inspection_fee,check_fee,medical_materials,dental_implant_fee,orthodontic_fee,planting_fee,pediatric_treatment_fee,
-		pediatric_treatment_fee2,western_medicine_fee,chinese_patent_medicine,total_fee,table_name)
+		pediatric_treatment_fee2,western_medicine_fee,chinese_patent_medicine,total_fee,table_name,material_cost,anesthesia_cost,zj_material_cost,
+		check_medical_materials,planting_material_cost,subtotal_medical_treatment,subtotal_drugs,total_pocket,total_receivables,check_list)
 		values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(#{item.organization_name},#{item.department},#{item.job_number},#{item.doctor_name},#{item.charge_date},#{item.treatment_fee},#{item.radiological_fee},#{item.operation_fee},#{item.inspection_fee},#{item.check_fee},#{item.medical_materials},
 			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.pediatric_treatment_fee2},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.total_fee},
-			#{item.table_name})
+			#{item.table_name},#{item.materialCost},#{item.anesthesiaCost},#{item.zjMaterialCost},#{item.checkMedicalMaterials},#{item.plantingMaterialCost},
+			#{item.subtotalMedicalTreatment},#{item.subtotalDrugs},#{item.totalPocket},#{item.totalReceivables},#{item.checkList})
 		</foreach>
 
 	</insert>
@@ -60,7 +74,17 @@
         sum(chinese_patent_medicine)chinese_patent_medicine,
 		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,
         sum(total_fee)total_fee,
-        table_name
+        table_name,
+		sum(material_cost)materialCost,
+		sum(anesthesia_cost)anesthesiaCost,
+		sum(zj_material_cost)zjMaterialCost,
+		sum(check_medical_materials)checkMedicalMaterials,
+		sum(planting_material_cost)plantingMaterialCost,
+		sum(subtotal_medical_treatment)subtotalMedicalTreatment,
+		sum(subtotal_drugs)subtotalDrugs,
+		sum(total_pocket)totalPocket,
+		sum(total_receivables)totalReceivables,
+		sum(check_list)checkList
 		FROM doctor_revenue where 1=1
 		<include refid="ListWhere"></include>
 	</select>
@@ -109,7 +133,17 @@
         sum(western_medicine_fee)western_medicine_fee,
         sum(chinese_patent_medicine)chinese_patent_medicine,
 		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,
-        sum(total_fee)total_fee,table_name
+        sum(total_fee)total_fee,table_name,
+		sum(material_cost)materialCost,
+		sum(anesthesia_cost)anesthesiaCost,
+		sum(zj_material_cost)zjMaterialCost,
+		sum(check_medical_materials)checkMedicalMaterials,
+		sum(planting_material_cost)plantingMaterialCost,
+		sum(subtotal_medical_treatment)subtotalMedicalTreatment,
+		sum(subtotal_drugs)subtotalDrugs,
+		sum(total_pocket)totalPocket,
+		sum(total_receivables)totalReceivables,
+		sum(check_list)checkList
 		FROM doctor_revenue   where 1=1
 		<include refid="ListWhere"></include>
 		 group by department,doctor_name order by charge_date

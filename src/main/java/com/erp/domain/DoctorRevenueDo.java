@@ -30,6 +30,48 @@ public class DoctorRevenueDo {
 	private double chinese_patent_medicine;
 	private double total_fee;
 	private String table_name;
+	/**
+	 * 材料费
+	 */
+	private double materialCost;
+	/**
+	 * 麻醉费
+	 */
+	private double anesthesiaCost;
+	/**
+	 * 正畸材料费
+	 */
+	private double zjMaterialCost;
+	/**
+	 * 检查一次性医药用材
+	 */
+	private double checkMedicalMaterials;
+	/**
+	 * 种植材料费
+	 */
+	private double plantingMaterialCost;
+
+	/**
+	 * 医疗小计
+	 */
+	private double subtotalMedicalTreatment;
+	/**
+	 * 药品小计
+	 */
+	private double subtotalDrugs;
+	/**
+	 * 自付合计
+	 */
+	private double totalPocket;
+	/**
+	 * 应收合计
+	 */
+	private double totalReceivables;
+	/**
+	 * 检查单
+	 */
+	private double checkList;
+
 	public int getId() {
 		return id;
 	}
@@ -156,5 +198,84 @@ public class DoctorRevenueDo {
 	public void setTable_name(String table_name) {
 		this.table_name = table_name;
 	}
-	 
+
+	public double getMaterialCost() {
+		return materialCost;
+	}
+
+	public void setMaterialCost(double materialCost) {
+		this.materialCost = materialCost;
+	}
+
+	public double getAnesthesiaCost() {
+		return anesthesiaCost;
+	}
+
+	public void setAnesthesiaCost(double anesthesiaCost) {
+		this.anesthesiaCost = anesthesiaCost;
+	}
+
+	public double getZjMaterialCost() {
+		return zjMaterialCost;
+	}
+
+	public void setZjMaterialCost(double zjMaterialCost) {
+		this.zjMaterialCost = zjMaterialCost;
+	}
+
+	public double getCheckMedicalMaterials() {
+		return checkMedicalMaterials;
+	}
+
+	public void setCheckMedicalMaterials(double checkMedicalMaterials) {
+		this.checkMedicalMaterials = checkMedicalMaterials;
+	}
+
+	public double getPlantingMaterialCost() {
+		return plantingMaterialCost;
+	}
+
+	public void setPlantingMaterialCost(double plantingMaterialCost) {
+		this.plantingMaterialCost = plantingMaterialCost;
+	}
+
+	public double getSubtotalMedicalTreatment() {
+		return subtotalMedicalTreatment;
+	}
+
+	public void setSubtotalMedicalTreatment(double subtotalMedicalTreatment) {
+		this.subtotalMedicalTreatment = subtotalMedicalTreatment;
+	}
+
+	public double getSubtotalDrugs() {
+		return subtotalDrugs;
+	}
+
+	public void setSubtotalDrugs(double subtotalDrugs) {
+		this.subtotalDrugs = subtotalDrugs;
+	}
+
+	public double getTotalPocket() {
+		return totalPocket;
+	}
+
+	public void setTotalPocket(double totalPocket) {
+		this.totalPocket = totalPocket;
+	}
+
+	public double getTotalReceivables() {
+		return totalReceivables;
+	}
+
+	public void setTotalReceivables(double totalReceivables) {
+		this.totalReceivables = totalReceivables;
+	}
+
+	public double getCheckList() {
+		return checkList;
+	}
+
+	public void setCheckList(double checkList) {
+		this.checkList = checkList;
+	}
 }

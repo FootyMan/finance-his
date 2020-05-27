@@ -26,7 +26,7 @@ function load() {
 			checkbox : true
 		}, {
 			field : 'organization_name', // 列字段名
-			title : '机构',// 列标题
+			title : '机构111111',// 列标题
 			align : 'center'
 		}, {
 			field : 'department', // 列字段名
@@ -54,6 +54,10 @@ function load() {
 				}
 			},
 		}, {
+			field : 'checkList',
+			title : '检查单',
+			align : 'center'
+		}, {
 			field : 'treatment_fee',
 			title : '治疗费',
 			align : 'center'
@@ -61,51 +65,87 @@ function load() {
 			title : '放射费',
 			field : 'radiological_fee',
 			align : 'center',
-		}, {
+		},{
 			field : 'operation_fee',
 			title : '手术费',
 			align : 'center'
 		}, {
-			field : 'inspection_fee',
-			title : '检验费',
-			align : 'center'
+			field: 'materialCost',
+			title: '材料费',
+			align: 'center'
 		}, {
-			field : 'check_fee',
-			title : '检查费',
+			field: 'anesthesiaCost',
+			title: '麻醉费',
+			align: 'center'
+		}, {
+			field: 'inspection_fee',
+			title: '检验费',
+			align: 'center'
+		},{
+			field : 'zjMaterialCost',
+			title : '正畸材料费',
 			align : 'center'
 		}, {
 			field : 'medical_materials',
-			title : '用材',
+			title : '治疗用材',
+			align : 'center'
+		}, {
+			field : 'checkMedicalMaterials',
+			title : '检查用材',
 			align : 'center'
 		}, {
 			field : 'dental_implant_fee',
 			title : '镶牙费',
 			align : 'center'
-		}, {
+		},{
 			field : 'orthodontic_fee',
 			title : '正畸费',
 			align : 'center'
 		}, {
-			field : 'planting_fee',
-			title : '种植费',
-			align : 'center'
+			field: 'planting_fee',
+			title: '种植费',
+			align: 'center'
 		}, {
-			field : 'pediatric_treatment_fee',
-			title : '儿科治疗费',
-			align : 'center'
+			field: 'pediatric_treatment_fee',
+			title: '儿科治疗费',
+			align: 'center'
 		}, {
-			field : 'western_medicine_fee',
-			title : '西药费',
-			align : 'center'
+			field: 'plantingMaterialCost',
+			title: '种植材料费',
+			align: 'center'
 		}, {
-			field : 'chinese_patent_medicine',
-			title : '中成药',
-			align : 'center'
+			field: 'subtotalMedicalTreatment',
+			title: '医疗小计',
+			align: 'center'
 		}, {
-			field : 'total_fee',
-			title : '合计',
-			align : 'center'
-		}, ],
+			field: 'western_medicine_fee',
+			title: '西药费',
+			align: 'center'
+		}, {
+			field: 'chinese_patent_medicine',
+			title: '中成药',
+			align: 'center'
+		}, {
+			field: 'check_fee',
+			title: '检查费',
+			align: 'center'
+		}, {
+			field: 'subtotalDrugs',
+			title: '药品小计',
+			align: 'center'
+		}, {
+			field: 'totalPocket',
+			title: '自负合计',
+			align: 'center'
+		}, {
+			field: 'totalReceivables',
+			title: '应收合计',
+			align: 'center'
+		},  {
+			field: 'total_fee',
+			title: '合计',
+			align: 'center'
+		},],
 		   onLoadSuccess(data)
 	        {
 				console.log(data);
