@@ -14,6 +14,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Null;
 
+import com.erp.domain.HisLocking;
+import com.erp.impl.LockingServerUtil;
+import com.erp.service.HisLockingService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +46,9 @@ public class DoctorController extends BaseController {
 
 	@Autowired
 	private DoctorRevenueServiceImpl doctorRevenueServiceImpl;
+	@Autowired
+	private LockingServerUtil lockingServerUtil;
+
 	private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
 
 	@GetMapping()
@@ -81,6 +87,8 @@ public class DoctorController extends BaseController {
 				result = POIUtils.readXlsx(in, 1, 29);
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM");
+			String lockingDate="";
 
 			String charge_date="";
 			for (List<Object> list : result) {
@@ -122,11 +130,19 @@ public class DoctorController extends BaseController {
 					//his_do.setMedical_materials(TransformationAmount(list.get(11)));
 					his_do.setTable_name(getUsername());
 					charge_date = list.get(5).toString();
+					lockingDate=sdfTwo.format(his_do.getCharge_date());
 					list_dao.add(his_do);
 				}
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("charge_date", charge_date);
+
+			boolean isExist=lockingServerUtil.isExist(lockingDate,2);
+			if(isExist)
+			{
+				return R.error("当前月份已锁定");
+			}
+
 			int count = doctorRevenueServiceImpl.count(map);
 			if (count<=0) {
 				doctorRevenueServiceImpl.insertdoctor(list_dao);

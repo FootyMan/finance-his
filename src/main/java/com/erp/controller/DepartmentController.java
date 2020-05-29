@@ -13,6 +13,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.erp.domain.HisLocking;
+import com.erp.impl.LockingServerUtil;
+import com.erp.service.HisLockingService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.aspectj.weaver.ast.Var;
 import org.slf4j.Logger;
@@ -43,6 +46,9 @@ public class DepartmentController extends BaseController {
 
     @Autowired
     private DepartmentServiceImpl departmentServiceImpl;
+    @Autowired
+    private LockingServerUtil lockingServerUtil;
+
     private static final Logger log = LoggerFactory.getLogger(DepartmentController.class);
 
     @GetMapping()
@@ -82,7 +88,9 @@ public class DepartmentController extends BaseController {
             }
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM");
             List<DepartmentDO> list_dao = new ArrayList<>();
+            String lockingDate="";
 
             String charge_date = "";
             for (List<Object> list : result) {
@@ -147,12 +155,20 @@ public class DepartmentController extends BaseController {
 
                     his_do.setTable_name(getUsername());
                     charge_date = list.get(3).toString();
+                    lockingDate=sdfTwo.format(his_do.getCharge_date());
                     list_dao.add(his_do);
                 }
             }
             // 插入之前查询是否已存再当前收费日期记录
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("charge_date", charge_date);
+
+            boolean isExist=lockingServerUtil.isExist(lockingDate,3);
+            if(isExist)
+            {
+                return R.error("当前月份已锁定");
+            }
+
             int count = departmentServiceImpl.count(map);
             if (count <= 0) {
                 departmentServiceImpl.insertDepartment(list_dao);

@@ -15,6 +15,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.erp.domain.*;
+import com.erp.impl.LockingServerUtil;
+import com.erp.service.HisLockingService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -32,10 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.erp.aspect.Log;
-import com.erp.domain.DepartmentDO;
-import com.erp.domain.DoctorRevenueDo;
-import com.erp.domain.FileDO;
-import com.erp.domain.HisPatientDO;
 import com.erp.impl.DoctorRevenueServiceImpl;
 import com.erp.impl.HisPatientServiceImpl;
 import com.erp.utils.FileType;
@@ -53,6 +52,8 @@ public class HisController extends BaseController {
 
 	@Autowired
 	private HisPatientServiceImpl hisPatientServiceImpl;
+	@Autowired
+	private LockingServerUtil lockingServerUtil;
 
 	@GetMapping()
 	@RequiresPermissions("his:finance:patient")
@@ -91,7 +92,9 @@ public class HisController extends BaseController {
 				// 2007
 				result = POIUtils.readXlsx(in, 1, 13);
 			}
+			String lockingDate="";
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+			SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy/MM");
 			List<HisPatientDO> list_dao = new ArrayList<>();
 
 			for (List<Object> list : result) {
@@ -114,8 +117,15 @@ public class HisController extends BaseController {
 //					his_do.setDepartment(list.get(13).toString());
 //					his_do.setDoctor(list.get(14).toString());
 //					his_do.setDiagnosis_msg(list.get(15).toString());
+
+					lockingDate=sdfTwo.format(his_do.getCharge_time()).replace("/","-");
 					list_dao.add(his_do);
 				}
+			}
+			boolean isExist=lockingServerUtil.isExist(lockingDate,1);
+			if(isExist)
+			{
+				return R.error("当前月份已锁定");
 			}
 			hisPatientServiceImpl.inserthispatient(list_dao);
 		} catch (Exception e) {
@@ -143,7 +153,11 @@ public class HisController extends BaseController {
 
 	public static void main(String[] args) throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy/MM");
+		Date date=new Date();
+		System.out.println(sdfTwo.format(date).replace("/","-"));
 		// String time = "2018/12/11 11:26";
 		// Date date = sdf.parse(time);
 		// System.out.println(date.getTime());
@@ -166,5 +180,6 @@ public class HisController extends BaseController {
 		}
 		return R.error();
 	}
+
 
 }

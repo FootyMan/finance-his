@@ -14,6 +14,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.erp.domain.HisLocking;
+import com.erp.impl.LockingServerUtil;
+import com.erp.service.HisLockingService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +43,9 @@ public class OutpatientController extends BaseController {
 
 	@Autowired
 	private OutpatientServiceImpl outpatientServiceImpl;
+	@Autowired
+	private LockingServerUtil lockingServerUtil;
+
 	@GetMapping()
 	@RequiresPermissions("his:outpatient:list")
 	String patient(Model model) {
@@ -61,6 +67,8 @@ public class OutpatientController extends BaseController {
 		FileOutputStream fos = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM");
+			String lockingDate="";
 			MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
 			MultipartFile multipartFile = params.getFile("file");
 			fos = new FileOutputStream(new File(multipartFile.getOriginalFilename()));
@@ -120,6 +128,8 @@ public class OutpatientController extends BaseController {
 					his_do.setReviewer(reviewer);
 					his_do.setTable_name(getUsername());
 					his_do.setTable_date(table_date);
+
+					lockingDate=sdfTwo.format(his_do.getSummary_date_begin());
 					list_dao.add(his_do);
 					
 				}
@@ -145,6 +155,13 @@ public class OutpatientController extends BaseController {
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("summary_date_begin", summary_date_begin);
+
+			boolean isExist=lockingServerUtil.isExist(lockingDate,4);
+			if(isExist)
+			{
+				return R.error("当前月份已锁定");
+			}
+
 			int count = outpatientServiceImpl.count(map);
 			if (count <= 0) {
 				outpatientServiceImpl.insertOutpatient(list_dao);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.erp.dao.HisLockingDao">
+    <resultMap id="HisLockingMap" type="com.erp.domain.HisLocking">
+        <result column="id" property="id" jdbcType="DECIMAL"/>
+        <result column="locking_date" property="lockingDate" jdbcType="VARCHAR"/>
+        <result column="locking_type" property="lockingType" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="hisLockingColumns">
+    	id,locking_date,locking_type
+    </sql>
+
+    <sql id="hisLockingUsedColumns">
+    	locking_date,locking_type
+    </sql>
+
+    <!-- 创建信息 -->
+    <insert id="insert" parameterType="com.erp.domain.HisLocking" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO his_locking(<include refid="hisLockingUsedColumns"/>)
+        VALUES (#{lockingDate},#{lockingType})
+    </insert>
+
+
+    <!-- 根据查询Bean获取数据集合，不带翻页 -->
+    <select id="queryList" resultMap="HisLockingMap">
+        select
+        <include refid="hisLockingColumns"/>
+        from his_locking where
+        <include refid="whereCondition"/>
+        order by id desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from sys_user
+        where
+        <include refid="whereCondition"/>
+    </select>
+    <!-- 根据查询Bean查询-判断是否存在 -->
+    <select id="exist" resultType="java.lang.Integer" parameterType="com.erp.domain.HisLocking">
+        select count(1) from his_locking where
+             locking_date = #{lockingDate}
+            and (locking_type = #{lockingType} or locking_type=0)
+    </select>
+
+
+    <delete id="delete">
+		delete from his_locking where id = #{value}
+	</delete>
+
+    <!-- 常用的查询Where条件 -->
+    <sql id="whereCondition">
+        1=1
+        <if test="id != null">
+            and id = #{id,jdbcType=DECIMAL}
+        </if>
+        <if test="lockingDate != null and lockingDate != ''">
+            and locking_date = #{lockingDate,jdbcType=VARCHAR}
+        </if>
+        <if test="lockingType != null">
+            and locking_type = #{lockingType,jdbcType=DECIMAL}
+        </if>
+    </sql>
+</mapper>
