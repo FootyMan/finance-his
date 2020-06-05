@@ -80,8 +80,6 @@
     function save() {
         var lockingDate = $("#lockingDate").val();
         var lockingType = $("#lockingType").val();
-        alert(lockingDate);
-        alert(lockingType);
         $.ajax({
             cache: true,
             type: "POST",

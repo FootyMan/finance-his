@@ -26,7 +26,7 @@ function load() {
 			checkbox : true
 		}, {
 			field : 'organization_name', // 列字段名
-			title : '机构111111',// 列标题
+			title : '机构',// 列标题
 			align : 'center'
 		}, {
 			field : 'department', // 列字段名
