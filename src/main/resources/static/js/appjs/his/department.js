@@ -106,19 +106,23 @@ function load() {
                 field: 'planting_fee',
                 title: '种植费',
                 align: 'center'
-            }, {
-                field: 'pediatric_treatment_fee',
-                title: '儿科治疗费',
-                align: 'center'
-            }, {
+            },
+            // {
+            //     field: 'pediatric_treatment_fee',
+            //     title: '儿科治疗费',
+            //     align: 'center'
+            // },
+            {
                 field: 'plantingMaterialCost',
                 title: '种植材料费',
                 align: 'center'
-            }, {
-                field: 'subtotalMedicalTreatment',
-                title: '医疗小计',
-                align: 'center'
-            }, {
+            },
+            // {
+            //     field: 'subtotalMedicalTreatment',
+            //     title: '医疗小计',
+            //     align: 'center'
+            // },
+            {
                 field: 'western_medicine_fee',
                 title: '西药费',
                 align: 'center'
@@ -126,27 +130,33 @@ function load() {
                 field: 'chinese_patent_medicine',
                 title: '中成药',
                 align: 'center'
-            }, {
-                field: 'pediatric_treatment_fee2',
-                title: '儿童治疗费',
-                align: 'center'
-            }, {
-                field: 'subtotalDrugs',
-                title: '药品小计',
-                align: 'center'
-            }, {
+            },
+            // {
+            //     field: 'pediatric_treatment_fee2',
+            //     title: '儿童治疗费',
+            //     align: 'center'
+            // },
+            // {
+            //     field: 'subtotalDrugs',
+            //     title: '药品小计',
+            //     align: 'center'
+            // },
+            {
                 field: 'total_fee',
                 title: '合计',
                 align: 'center'
-            }, {
-                field: 'totalPocket',
-                title: '自付合计',
-                align: 'center'
-            }, {
-                field: 'totalReceivables',
-                title: '应收合计',
-                align: 'center'
-            },],
+            },
+            // {
+            //     field: 'totalPocket',
+            //     title: '自付合计',
+            //     align: 'center'
+            // },
+            // {
+            //     field: 'totalReceivables',
+            //     title: '应收合计',
+            //     align: 'center'
+            // }
+            ,],
         onLoadSuccess(data) {
             if (data != '') {
                 if ($('#countType').val() == "1") {
