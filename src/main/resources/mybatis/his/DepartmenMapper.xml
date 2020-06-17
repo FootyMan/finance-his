@@ -36,16 +36,16 @@
 		<result column="total_fee" property="total_fee" jdbcType="DECIMAL" />
 		<result column="table_name" property="table_name" jdbcType="VARCHAR" />
 
-		<result column="material_cost" property="materialCost" jdbcType="DECIMAL" />
-		<result column="anesthesia_cost" property="anesthesiaCost" jdbcType="DECIMAL" />
-		<result column="zj_material_cost" property="zjMaterialCost" jdbcType="DECIMAL" />
-		<result column="treatment_medical_materials" property="treatmentMedicalMaterials" jdbcType="DECIMAL" />
-		<result column="check_medical_materials" property="checkMedicalMaterials" jdbcType="DECIMAL" />
-		<result column="planting_material_cost" property="plantingMaterialCost" jdbcType="DECIMAL" />
-		<result column="subtotal_medical_treatment" property="subtotalMedicalTreatment" jdbcType="DECIMAL" />
-		<result column="subtotal_drugs" property="subtotalDrugs" jdbcType="DECIMAL" />
-		<result column="total_pocket" property="totalPocket" jdbcType="DECIMAL" />
-		<result column="total_receivables" property="totalReceivables" jdbcType="DECIMAL" />
+		<result column="material_cost" property="material_cost" jdbcType="DECIMAL" />
+		<result column="anesthesia_cost" property="anesthesia_cost" jdbcType="DECIMAL" />
+		<result column="zj_material_cost" property="zj_material_cost" jdbcType="DECIMAL" />
+		<result column="treatment_medical_materials" property="treatment_medical_materials" jdbcType="DECIMAL" />
+		<result column="check_medical_materials" property="check_medical_materials" jdbcType="DECIMAL" />
+		<result column="planting_material_cost" property="planting_material_cost" jdbcType="DECIMAL" />
+		<result column="subtotal_medical_treatment" property="subtotal_medical_treatment" jdbcType="DECIMAL" />
+		<result column="subtotal_drugs" property="subtotal_drugs" jdbcType="DECIMAL" />
+		<result column="total_pocket" property="total_pocket" jdbcType="DECIMAL" />
+		<result column="total_receivables" property="total_receivables" jdbcType="DECIMAL" />
 
 
 	</resultMap>
@@ -62,9 +62,9 @@
 			separator=",">
 			(#{item.organization_name},#{item.department_name},#{item.charge_date},#{item.treatment_fee},#{item.radiological_fee},#{item.operation_fee},#{item.inspection_fee},#{item.check_fee},#{item.medical_materials},
 			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.pediatric_treatment_fee2},#{item.total_fee},
-			#{item.table_name},#{item.materialCost},#{item.anesthesiaCost},#{item.zjMaterialCost},#{item.treatmentMedicalMaterials},
-			#{item.checkMedicalMaterials},#{item.plantingMaterialCost},#{item.subtotalMedicalTreatment},#{item.subtotalDrugs},
-			#{item.totalPocket},#{item.totalReceivables})
+			#{item.table_name},#{item.material_cost},#{item.anesthesia_cost},#{item.zj_material_cost},#{item.treatment_medical_materials},
+			#{item.check_medical_materials},#{item.planting_material_cost},#{item.subtotal_medical_treatment},#{item.subtotal_drugs},
+			#{item.total_pocket},#{item.total_receivables})
 		</foreach>
 
 	</insert>
@@ -76,16 +76,16 @@
 		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
 		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
 		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name,
-		sum(material_cost)materialCost,
-		sum(anesthesia_cost)anesthesiaCost,
-		sum(zj_material_cost)zjMaterialCost,
-		sum(treatment_medical_materials)treatmentMedicalMaterials,
-		sum(check_medical_materials)checkMedicalMaterials,
-		sum(planting_material_cost)plantingMaterialCost,
-		sum(subtotal_medical_treatment)subtotalMedicalTreatment,
-		sum(subtotal_drugs)subtotalDrugs,
+		sum(material_cost)material_cost,
+		sum(anesthesia_cost)anesthesia_cost,
+		sum(zj_material_cost)zj_material_cost,
+		sum(treatment_medical_materials)treatment_medical_materials,
+		sum(check_medical_materials)check_medical_materials,
+		sum(planting_material_cost)planting_material_cost,
+		sum(subtotal_medical_treatment)subtotal_medical_treatment,
+		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
-		sum(total_receivables)totalReceivables
+		sum(total_receivables)total_receivables
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 	</select>
@@ -123,16 +123,16 @@
 		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
 		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
 		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name,
-		sum(material_cost)materialCost,
-		sum(anesthesia_cost)anesthesiaCost,
-		sum(zj_material_cost)zjMaterialCost,
-		sum(treatment_medical_materials)treatmentMedicalMaterials,
-		sum(check_medical_materials)checkMedicalMaterials,
-		sum(planting_material_cost)plantingMaterialCost,
-		sum(subtotal_medical_treatment)subtotalMedicalTreatment,
-		sum(subtotal_drugs)subtotalDrugs,
+		sum(material_cost)material_cost,
+		sum(anesthesia_cost)anesthesia_cost,
+		sum(zj_material_cost)zj_material_cost,
+		sum(treatment_medical_materials)treatment_medical_materials,
+		sum(check_medical_materials)check_medical_materials,
+		sum(planting_material_cost)planting_material_cost,
+		sum(subtotal_medical_treatment)subtotal_medical_treatment,
+		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
-		sum(total_receivables)totalReceivables
+		sum(total_receivables)total_receivables
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 		group by department_name order by charge_date

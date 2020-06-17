@@ -109,17 +109,17 @@ public class DepartmentController extends BaseController {
                     //手术费
                     his_do.setOperation_fee(TransformationAmount(list.get(6)));
                     //材料费
-                    his_do.setMaterialCost(TransformationAmount(list.get(7)));
+                    his_do.setMaterial_cost(TransformationAmount(list.get(7)));
                     //麻醉费
-                    his_do.setAnesthesiaCost(TransformationAmount(list.get(8)));
+                    his_do.setAnesthesia_cost(TransformationAmount(list.get(8)));
                     //检验费
                     his_do.setInspection_fee(TransformationAmount(list.get(9)));
                     //正畸材料费
-                    his_do.setZjMaterialCost(TransformationAmount(list.get(10)));
+                    his_do.setZj_material_cost(TransformationAmount(list.get(10)));
                     //治疗一次性医药用材
-                    his_do.setTreatmentMedicalMaterials(TransformationAmount(list.get(11)));
+                    his_do.setTreatment_medical_materials(TransformationAmount(list.get(11)));
                     //检查一次性医药用材
-                    his_do.setCheckMedicalMaterials(TransformationAmount(list.get(12)));
+                    his_do.setCheck_medical_materials(TransformationAmount(list.get(12)));
                     //镶牙费
                     his_do.setDental_implant_fee(TransformationAmount(list.get(13)));
                     //正畸费
@@ -129,9 +129,9 @@ public class DepartmentController extends BaseController {
                     //儿童治疗费
                     his_do.setPediatric_treatment_fee(TransformationAmount(list.get(16)));
                     //种植材料费
-                    his_do.setPlantingMaterialCost(TransformationAmount(list.get(17)));
+                    his_do.setPlanting_material_cost(TransformationAmount(list.get(17)));
                     //医疗小计
-                    his_do.setSubtotalMedicalTreatment(TransformationAmount(list.get(18)));
+                    his_do.setSubtotal_medical_treatment(TransformationAmount(list.get(18)));
                     //西药费
                     his_do.setWestern_medicine_fee(TransformationAmount(list.get(19)));
                     //中成药
@@ -139,13 +139,13 @@ public class DepartmentController extends BaseController {
                     //儿童治疗费
                     his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(21)));
                     //药品小计
-                    his_do.setSubtotalDrugs(TransformationAmount(list.get(22)));
+                    his_do.setSubtotal_drugs(TransformationAmount(list.get(22)));
                     //合计
                     his_do.setTotal_fee(TransformationAmount(list.get(23)));
                     //自付合计
-                    his_do.setTotalPocket(TransformationAmount(list.get(24)));
+                    his_do.setTotal_pocket(TransformationAmount(list.get(24)));
                     //应收合计
-                    his_do.setTotalReceivables(TransformationAmount(list.get(25)));
+                    his_do.setTotal_pocket(TransformationAmount(list.get(25)));
 
                     //his_do.setCheck_fee(TransformationAmount(list.get(8)));
                     //his_do.setMedical_materials(TransformationAmount(list.get(9)));
