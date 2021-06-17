@@ -54,7 +54,7 @@ function load() {
                 }
             },
         }, {
-            field: 'checkList',
+            field: 'check_list',
             title: '检查单',
             align: 'center'
         }, {
@@ -70,11 +70,11 @@ function load() {
             title: '手术费',
             align: 'center'
         }, {
-            field: 'materialCost',
+            field: 'material_cost',
             title: '材料费',
             align: 'center'
         }, {
-            field: 'anesthesiaCost',
+            field: 'anesthesia_cost',
             title: '麻醉费',
             align: 'center'
         }, {
@@ -82,7 +82,7 @@ function load() {
             title: '检验费',
             align: 'center'
         }, {
-            field: 'zjMaterialCost',
+            field: 'zj_material_cost',
             title: '正畸材料费',
             align: 'center'
         }, {
@@ -90,7 +90,7 @@ function load() {
             title: '治疗用材',
             align: 'center'
         }, {
-            field: 'checkMedicalMaterials',
+            field: 'check_medical_materials',
             title: '检查用材',
             align: 'center'
         }, {
@@ -112,12 +112,12 @@ function load() {
             // 	align: 'center'
             // },
             {
-                field: 'plantingMaterialCost',
+                field: 'planting_material_cost',
                 title: '种植材料费',
                 align: 'center'
             },
             // {
-            //     field: 'subtotalMedicalTreatment',
+            //     field: 'subtotal_medical_treatment',
             //     title: '医疗小计',
             //     align: 'center'
             // },
@@ -135,17 +135,17 @@ function load() {
                 align: 'center'
             },
             // {
-            //     field: 'subtotalDrugs',
+            //     field: 'subtotal_drugs',
             //     title: '药品小计',
             //     align: 'center'
             // },
             // {
-            //     field: 'totalPocket',
+            //     field: 'total_pocket',
             //     title: '自负合计',
             //     align: 'center'
             // },
             // {
-            //     field: 'totalReceivables',
+            //     field: 'total_receivables',
             //     title: '应收合计',
             //     align: 'center'
             // },
