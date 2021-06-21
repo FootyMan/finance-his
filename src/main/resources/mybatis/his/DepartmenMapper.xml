@@ -47,6 +47,17 @@
 		<result column="total_pocket" property="total_pocket" jdbcType="DECIMAL" />
 		<result column="total_receivables" property="total_receivables" jdbcType="DECIMAL" />
 
+		<result column="registration_fee" property="registrationFee" jdbcType="DECIMAL" />
+		<result column="operation_medical_materials" property="operationMedicalMaterials" jdbcType="DECIMAL" />
+		<result column="other_fee" property="otherFee" jdbcType="DECIMAL" />
+		<result column="repair_fee" property="repairFee" jdbcType="DECIMAL" />
+		<result column="orthodontic_cure_fee" property="orthodonticCureFee" jdbcType="DECIMAL" />
+		<result column="number_repair_fee" property="numberRepairFee" jdbcType="DECIMAL" />
+		<result column="one_time_fee" property="oneTimeFee" jdbcType="DECIMAL" />
+		<result column="planting_operation_fee" property="plantingOperationFee" jdbcType="DECIMAL" />
+		<result column="planting_repair_fee" property="plantingRepairFee" jdbcType="DECIMAL" />
+		<result column="planting_repair_material_fee" property="plantingRepairMaterialFee" jdbcType="DECIMAL" />
+
 
 	</resultMap>
 
@@ -56,7 +67,8 @@
 		operation_fee,inspection_fee,check_fee,medical_materials,dental_implant_fee,orthodontic_fee,planting_fee,pediatric_treatment_fee,
 		western_medicine_fee,chinese_patent_medicine,pediatric_treatment_fee2,total_fee,table_name,material_cost,anesthesia_cost,zj_material_cost,
 		treatment_medical_materials,check_medical_materials,planting_material_cost,subtotal_medical_treatment,subtotal_drugs,
-		total_pocket,total_receivables)
+		total_pocket,total_receivables,registration_fee,operation_medical_materials,other_fee,repair_fee,orthodontic_cure_fee,number_repair_fee,one_time_fee,
+		planting_operation_fee,planting_repair_fee,planting_repair_material_fee)
 		values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
@@ -64,7 +76,8 @@
 			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.pediatric_treatment_fee2},#{item.total_fee},
 			#{item.table_name},#{item.material_cost},#{item.anesthesia_cost},#{item.zj_material_cost},#{item.treatment_medical_materials},
 			#{item.check_medical_materials},#{item.planting_material_cost},#{item.subtotal_medical_treatment},#{item.subtotal_drugs},
-			#{item.total_pocket},#{item.total_receivables})
+			#{item.total_pocket},#{item.total_receivables},#{item.registrationFee},#{item.operationMedicalMaterials},#{item.otherFee},#{item.repairFee},#{item.orthodonticCureFee},
+			#{item.numberRepairFee},#{item.oneTimeFee},#{item.plantingOperationFee},#{item.plantingRepairFee},#{item.plantingRepairMaterialFee})
 		</foreach>
 
 	</insert>
@@ -72,10 +85,21 @@
 	<!-- 统计 -->
 	<select id="sumdepartmentList" resultMap="doctorResultMap">
 		SELECT 0
-		id,'合计'organization_name,''department_name,now() charge_date,sum(treatment_fee)treatment_fee,sum(radiological_fee)radiological_fee,sum(operation_fee)operation_fee,sum(inspection_fee)inspection_fee,
-		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
-		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
-		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name,
+		id,'合计'organization_name,''department_name,now() charge_date,
+		sum(treatment_fee)treatment_fee,
+		sum(radiological_fee)radiological_fee,
+		sum(operation_fee)operation_fee,
+		sum(inspection_fee)inspection_fee,
+		sum(check_fee)check_fee,
+		sum(medical_materials)medical_materials,
+		sum(dental_implant_fee)dental_implant_fee,
+		sum(orthodontic_fee)orthodontic_fee,
+		sum(planting_fee)planting_fee,
+		sum(pediatric_treatment_fee)pediatric_treatment_fee,
+		sum(western_medicine_fee)western_medicine_fee,
+		sum(chinese_patent_medicine)chinese_patent_medicine,
+		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,
+		sum(total_fee)total_fee,table_name,
 		sum(material_cost)material_cost,
 		sum(anesthesia_cost)anesthesia_cost,
 		sum(zj_material_cost)zj_material_cost,
@@ -85,7 +109,17 @@
 		sum(subtotal_medical_treatment)subtotal_medical_treatment,
 		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
-		sum(total_receivables)total_receivables
+		sum(total_receivables)total_receivables,
+		sum(registration_fee)registrationFee,
+		sum(operation_medical_materials)operationMedicalMaterials,
+		sum(other_fee)otherFee,
+		sum(repair_fee)repairFee,
+		sum(orthodontic_cure_fee)orthodonticCureFee,
+		sum(number_repair_fee)numberRepairFee,
+		sum(one_time_fee)oneTimeFee,
+		sum(planting_operation_fee)plantingOperationFee,
+		sum(planting_repair_fee)plantingRepairFee,
+		sum(planting_repair_material_fee)plantingRepairMaterialFee
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 	</select>
@@ -119,10 +153,21 @@
 	<!-- 按科室统计 -->
 	<select id="sumdepartmentListbydepartment" resultMap="doctorResultMap">
 		SELECT 
-		id,organization_name,department_name,charge_date,sum(treatment_fee)treatment_fee,sum(radiological_fee)radiological_fee,sum(operation_fee)operation_fee,sum(inspection_fee)inspection_fee,
-		sum(check_fee)check_fee,sum(medical_materials)medical_materials,sum(dental_implant_fee)dental_implant_fee,sum(orthodontic_fee)orthodontic_fee,sum(planting_fee)planting_fee,
-		sum(pediatric_treatment_fee)pediatric_treatment_fee,sum(western_medicine_fee)western_medicine_fee,sum(chinese_patent_medicine)chinese_patent_medicine,
-		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,sum(total_fee)total_fee,table_name,
+		id,organization_name,department_name,charge_date,
+		sum(treatment_fee)treatment_fee,
+		sum(radiological_fee)radiological_fee,
+		sum(operation_fee)operation_fee,
+		sum(inspection_fee)inspection_fee,
+		sum(check_fee)check_fee,
+		sum(medical_materials)medical_materials,
+		sum(dental_implant_fee)dental_implant_fee,
+		sum(orthodontic_fee)orthodontic_fee,
+		sum(planting_fee)planting_fee,
+		sum(pediatric_treatment_fee)pediatric_treatment_fee,
+		sum(western_medicine_fee)western_medicine_fee,
+		sum(chinese_patent_medicine)chinese_patent_medicine,
+		sum(pediatric_treatment_fee2)pediatric_treatment_fee2,
+		sum(total_fee)total_fee,table_name,
 		sum(material_cost)material_cost,
 		sum(anesthesia_cost)anesthesia_cost,
 		sum(zj_material_cost)zj_material_cost,
@@ -132,7 +177,17 @@
 		sum(subtotal_medical_treatment)subtotal_medical_treatment,
 		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
-		sum(total_receivables)total_receivables
+		sum(total_receivables)total_receivables,
+		sum(registration_fee)registrationFee,
+		sum(operation_medical_materials)operationMedicalMaterials,
+		sum(other_fee)otherFee,
+		sum(repair_fee)repairFee,
+		sum(orthodontic_cure_fee)orthodonticCureFee,
+		sum(number_repair_fee)numberRepairFee,
+		sum(one_time_fee)oneTimeFee,
+		sum(planting_operation_fee)plantingOperationFee,
+		sum(planting_repair_fee)plantingRepairFee,
+		sum(planting_repair_material_fee)plantingRepairMaterialFee
 		FROM tab_department where 1=1
 		<include refid="ListWhere"></include>
 		group by department_name order by charge_date

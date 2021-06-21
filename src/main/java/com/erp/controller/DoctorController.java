@@ -81,10 +81,10 @@ public class DoctorController extends BaseController {
 			String fileName = file.getOriginalFilename();
 			// 2003
 			if (fileName.endsWith("xls")) {
-				result = POIUtils.readXlsx2003(in, 1, 29);
+				result = POIUtils.readXlsx2003(in, 1, 38);
 			} else {
 				// 2007
-				result = POIUtils.readXlsx(in, 1, 29);
+				result = POIUtils.readXlsx(in, 1, 38);
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM");
@@ -95,41 +95,60 @@ public class DoctorController extends BaseController {
 				if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
 					DoctorRevenueDo his_do = new DoctorRevenueDo();
 					his_do.setOrganization_name(list.get(1).toString());//机构
-					his_do.setDepartment(list.get(2).toString());//科室
-					his_do.setJob_number(list.get(3).toString());//工号
+					his_do.setCharge_date(sdf.parse(list.get(2).toString()));//收费日期
+					his_do.setDepartment(list.get(3).toString());//科室
 					his_do.setDoctor_name(list.get(4).toString());//医生名称
-					his_do.setCharge_date(sdf.parse(list.get(5).toString()));//收费日期
-					his_do.setCheck_list(TransformationAmount(list.get(6)));//检验单
-					his_do.setTreatment_fee(TransformationAmount(list.get(7)));//治疗费
-					his_do.setRadiological_fee(TransformationAmount(list.get(8)));//放射费
-					his_do.setOperation_fee(TransformationAmount(list.get(9)));//手术费
-					his_do.setMaterial_cost(TransformationAmount(list.get(10)));//材料费
-					his_do.setAnesthesia_cost(TransformationAmount(list.get(11)));//麻醉费
-					his_do.setInspection_fee(TransformationAmount(list.get(12)));//检验费
-
-					his_do.setZj_material_cost(TransformationAmount(list.get(13)));//正畸材料费
-					his_do.setMedical_materials(TransformationAmount(list.get(14)));//治疗用一次性医用材料
+					//his_do.setJob_number(list.get(3).toString());//工号
+					his_do.setCheck_list(TransformationAmount(list.get(5)));//检验单
+					his_do.setTreatment_fee(TransformationAmount(list.get(6)));//治疗费
+					his_do.setRadiological_fee(TransformationAmount(list.get(7)));//放射费
+					his_do.setOperation_fee(TransformationAmount(list.get(8)));//手术费
+					his_do.setMaterial_cost(TransformationAmount(list.get(9)));//材料费
+					his_do.setAnesthesia_cost(TransformationAmount(list.get(10)));//麻醉费
+					his_do.setInspection_fee(TransformationAmount(list.get(11)));//检验费
+					//TODO:挂号费12
+					his_do.setRegistrationFee(TransformationAmount(list.get(12)));
+					his_do.setMedical_materials(TransformationAmount(list.get(13)));//治疗用一次性医用材料
+					//TODO:手术用一次性医用材料 14
+					his_do.setOperationMedicalMaterials(TransformationAmount(list.get(14)));
 					his_do.setCheck_medical_materials(TransformationAmount(list.get(15)));//检查一次性医药用材
-					his_do.setDental_implant_fee(TransformationAmount(list.get(16)));//镶牙费
-					his_do.setOrthodontic_fee(TransformationAmount(list.get(17)));//正畸费
-					his_do.setPlanting_fee(TransformationAmount(list.get(18)));//种植材料费
-					his_do.setPediatric_treatment_fee(TransformationAmount(list.get(19)));//儿科治疗费
-					his_do.setPlanting_material_cost(TransformationAmount(list.get(20)));//种植材料费
-					his_do.setSubtotal_medical_treatment(TransformationAmount(list.get(21)));//医疗小计
-					his_do.setWestern_medicine_fee(TransformationAmount(list.get(22)));//西药费
-					his_do.setChinese_patent_medicine(TransformationAmount(list.get(23)));//中成药
-					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(24)));//儿科治疗费2
-					his_do.setSubtotal_drugs(TransformationAmount(list.get(25)));//药品小计
-					his_do.setTotal_fee(TransformationAmount(list.get(26)));//合计
-					his_do.setTotal_pocket(TransformationAmount(list.get(27)));//自付合计
-					his_do.setTotal_receivables(TransformationAmount(list.get(28)));//应收合计
+					//TODO:其他 16
+					his_do.setOtherFee(TransformationAmount(list.get(16)));
+					his_do.setDental_implant_fee(TransformationAmount(list.get(17)));//镶牙费
+					his_do.setOrthodontic_fee(TransformationAmount(list.get(18)));//正畸费
+					his_do.setPlanting_fee(TransformationAmount(list.get(19)));//种植材料费
+					his_do.setPediatric_treatment_fee(TransformationAmount(list.get(20)));//儿科治疗费
+					his_do.setZj_material_cost(TransformationAmount(list.get(21)));//正畸材料费
+					his_do.setPlanting_material_cost(TransformationAmount(list.get(22)));//种植材料费
+					//TODO:修复费 23
+					his_do.setRepairFee(TransformationAmount(list.get(23)));
+					//TODO:正畸治疗费 24
+					his_do.setOrthodonticCureFee(TransformationAmount(list.get(24)));
+					//TODO:数字化修复 25
+					his_do.setNumberRepairFee(TransformationAmount(list.get(25)));
+					//TODO:一次性费用 26
+					his_do.setOneTimeFee(TransformationAmount(list.get(26)));
+					//TODO:种植手术费 27
+					his_do.setPlantingOperationFee(TransformationAmount(list.get(27)));
+					//TODO:种植修复费 28
+					his_do.setPlantingRepairFee(TransformationAmount(list.get(28)));
+					//TODO:种植修复材料 29
+					his_do.setPlantingRepairMaterialFee(TransformationAmount(list.get(29)));
+					his_do.setSubtotal_medical_treatment(TransformationAmount(list.get(30)));//医疗小计
+					his_do.setWestern_medicine_fee(TransformationAmount(list.get(31)));//西药费
+					his_do.setChinese_patent_medicine(TransformationAmount(list.get(32)));//中成药
+					his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(33)));//儿科治疗费2
+					his_do.setSubtotal_drugs(TransformationAmount(list.get(34)));//药品小计
+					his_do.setTotal_fee(TransformationAmount(list.get(35)));//合计
+					his_do.setTotal_pocket(TransformationAmount(list.get(36)));//自付合计
+					his_do.setTotal_receivables(TransformationAmount(list.get(37)));//应收合计
 
 					//
 
 					//his_do.setCheck_fee(TransformationAmount(list.get(10)));
 					//his_do.setMedical_materials(TransformationAmount(list.get(11)));
 					his_do.setTable_name(getUsername());
-					charge_date = list.get(5).toString();
+					charge_date = list.get(2).toString();
 					lockingDate=sdfTwo.format(his_do.getCharge_date());
 					list_dao.add(his_do);
 				}

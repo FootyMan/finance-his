@@ -81,10 +81,10 @@ public class DepartmentController extends BaseController {
             String fileName = file.getOriginalFilename();
             // 2003
             if (fileName.endsWith("xls")) {
-                result = POIUtils.readXlsx2003(in, 1, 26);
+                result = POIUtils.readXlsx2003(in, 1, 36);
             } else {
                 // 2007
-                result = POIUtils.readXlsx(in, 1, 26);
+                result = POIUtils.readXlsx(in, 1, 36);
             }
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -98,10 +98,10 @@ public class DepartmentController extends BaseController {
                 if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
                     //机构名称
                     his_do.setOrganization_name(list.get(1).toString());
-                    //科室名称
-                    his_do.setDepartment_name(list.get(2).toString());
                     //收费日期
-                    his_do.setCharge_date(sdf.parse(list.get(3).toString()));
+                    his_do.setCharge_date(sdf.parse(list.get(2).toString()));
+                    //科室名称
+                    his_do.setDepartment_name(list.get(3).toString());
                     //治疗费
                     his_do.setTreatment_fee(TransformationAmount(list.get(4)));
                     //放射费
@@ -114,38 +114,58 @@ public class DepartmentController extends BaseController {
                     his_do.setAnesthesia_cost(TransformationAmount(list.get(8)));
                     //检验费
                     his_do.setInspection_fee(TransformationAmount(list.get(9)));
-                    //正畸材料费
-                    his_do.setZj_material_cost(TransformationAmount(list.get(10)));
+                    //挂号费 10
+                    his_do.setRegistrationFee(TransformationAmount(list.get(10)));
                     //治疗一次性医药用材
                     his_do.setTreatment_medical_materials(TransformationAmount(list.get(11)));
+                    //手术用一次性医用材料 12
+                    his_do.setOperationMedicalMaterials(TransformationAmount(list.get(12)));
                     //检查一次性医药用材
-                    his_do.setCheck_medical_materials(TransformationAmount(list.get(12)));
+                    his_do.setCheck_medical_materials(TransformationAmount(list.get(13)));
+                    //其他 14
+                    his_do.setOtherFee(TransformationAmount(list.get(14)));
                     //镶牙费
-                    his_do.setDental_implant_fee(TransformationAmount(list.get(13)));
+                    his_do.setDental_implant_fee(TransformationAmount(list.get(15)));
                     //正畸费
-                    his_do.setOrthodontic_fee(TransformationAmount(list.get(14)));
+                    his_do.setOrthodontic_fee(TransformationAmount(list.get(16)));
                     //种植费
-                    his_do.setPlanting_fee(TransformationAmount(list.get(15)));
-                    //儿童治疗费
-                    his_do.setPediatric_treatment_fee(TransformationAmount(list.get(16)));
+                    his_do.setPlanting_fee(TransformationAmount(list.get(17)));
+                    //儿科治疗费
+                    his_do.setPediatric_treatment_fee(TransformationAmount(list.get(18)));
+                    //正畸材料费
+                    his_do.setZj_material_cost(TransformationAmount(list.get(19)));
                     //种植材料费
-                    his_do.setPlanting_material_cost(TransformationAmount(list.get(17)));
+                    his_do.setPlanting_material_cost(TransformationAmount(list.get(20)));
+                    //修复费 21
+                    his_do.setRepairFee(TransformationAmount(list.get(21)));
+                    //正畸治疗费 22
+                    his_do.setOrthodonticCureFee(TransformationAmount(list.get(22)));
+                    //数字化修复 23
+                    his_do.setNumberRepairFee(TransformationAmount(list.get(23)));
+                    //一次性费用 24
+                    his_do.setOneTimeFee(TransformationAmount(list.get(24)));
+                    //种植手术费 25
+                    his_do.setPlantingOperationFee(TransformationAmount(list.get(25)));
+                    //种植修复费 26
+                    his_do.setPlantingRepairFee(TransformationAmount(list.get(26)));
+                    //种植修复材料费
+                    his_do.setPlantingRepairMaterialFee(TransformationAmount(list.get(27)));
                     //医疗小计
-                    his_do.setSubtotal_medical_treatment(TransformationAmount(list.get(18)));
+                    his_do.setSubtotal_medical_treatment(TransformationAmount(list.get(28)));
                     //西药费
-                    his_do.setWestern_medicine_fee(TransformationAmount(list.get(19)));
+                    his_do.setWestern_medicine_fee(TransformationAmount(list.get(29)));
                     //中成药
-                    his_do.setChinese_patent_medicine(TransformationAmount(list.get(20)));
+                    his_do.setChinese_patent_medicine(TransformationAmount(list.get(30)));
                     //儿童治疗费
-                    his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(21)));
+                    his_do.setPediatric_treatment_fee2(TransformationAmount(list.get(31)));
                     //药品小计
-                    his_do.setSubtotal_drugs(TransformationAmount(list.get(22)));
+                    his_do.setSubtotal_drugs(TransformationAmount(list.get(32)));
                     //合计
-                    his_do.setTotal_fee(TransformationAmount(list.get(23)));
+                    his_do.setTotal_fee(TransformationAmount(list.get(33)));
                     //自付合计
-                    his_do.setTotal_pocket(TransformationAmount(list.get(24)));
+                    his_do.setTotal_pocket(TransformationAmount(list.get(34)));
                     //应收合计
-                    his_do.setTotal_pocket(TransformationAmount(list.get(25)));
+                    his_do.setTotal_pocket(TransformationAmount(list.get(35)));
 
                     //his_do.setCheck_fee(TransformationAmount(list.get(8)));
                     //his_do.setMedical_materials(TransformationAmount(list.get(9)));
@@ -154,7 +174,7 @@ public class DepartmentController extends BaseController {
 
 
                     his_do.setTable_name(getUsername());
-                    charge_date = list.get(3).toString();
+                    charge_date = list.get(2).toString();
                     lockingDate=sdfTwo.format(his_do.getCharge_date());
                     list_dao.add(his_do);
                 }

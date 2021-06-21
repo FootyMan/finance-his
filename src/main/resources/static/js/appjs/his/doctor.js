@@ -33,11 +33,13 @@ function load() {
             title: '科室名称',// 列标题
             align: 'center',
             sortable: true,
-        }, {
-            field: 'job_number',
-            title: '工号',
-            align: 'center'
-        }, {
+        },
+            // {
+            // field: 'job_number',
+            // title: '工号',
+            // align: 'center'
+            // },
+         {
             field: 'doctor_name',
             title: '医生名称',
             align: 'center',
@@ -82,16 +84,28 @@ function load() {
             title: '检验费',
             align: 'center'
         }, {
+            field: 'registrationFee',
+            title: '挂号费',
+            align: 'center'
+        }, {
             field: 'zj_material_cost',
             title: '正畸材料费',
             align: 'center'
         }, {
+            field: 'operationMedicalMaterials',
+            title: '手术用材',
+            align: 'center'
+        },{
             field: 'medical_materials',
             title: '治疗用材',
             align: 'center'
         }, {
             field: 'check_medical_materials',
             title: '检查用材',
+            align: 'center'
+        },{
+            field: 'otherFee',
+            title: '其他',
             align: 'center'
         }, {
             field: 'dental_implant_fee',
@@ -102,8 +116,32 @@ function load() {
             title: '正畸费',
             align: 'center'
         }, {
+            field: 'orthodonticCureFee',
+            title: '正畸治疗费',
+            align: 'center'
+        },{
+            field: 'repairFee',
+            title: '修复费',
+            align: 'center'
+        },{
+            field: 'numberRepairFee',
+            title: '数字化修复',
+            align: 'center'
+         },{
             field: 'planting_fee',
             title: '种植费',
+            align: 'center'
+        },{
+            field: 'plantingOperationFee',
+            title: '种植手术费',
+            align: 'center'
+        },{
+            field: 'plantingRepairFee',
+            title: '种植修复费',
+            align: 'center'
+        }, {
+            field: 'plantingRepairMaterialFee',
+            title: '种植修复材料费',
             align: 'center'
         },
             // 	{
@@ -111,11 +149,11 @@ function load() {
             // 	title: '儿科治疗费',
             // 	align: 'center'
             // },
-            {
-                field: 'planting_material_cost',
-                title: '种植材料费',
-                align: 'center'
-            },
+         // {
+         //     field: 'planting_material_cost',
+         //     title: '种植材料费',
+         //     align: 'center'
+         // },
             // {
             //     field: 'subtotal_medical_treatment',
             //     title: '医疗小计',

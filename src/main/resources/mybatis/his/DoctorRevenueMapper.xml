@@ -36,6 +36,16 @@
 		<result column="total_receivables" property="total_receivables" jdbcType="DECIMAL" />
 		<result column="check_list" property="check_list" jdbcType="DECIMAL" />
 
+		<result column="registration_fee" property="registrationFee" jdbcType="DECIMAL" />
+		<result column="operation_medical_materials" property="operationMedicalMaterials" jdbcType="DECIMAL" />
+		<result column="other_fee" property="otherFee" jdbcType="DECIMAL" />
+		<result column="repair_fee" property="repairFee" jdbcType="DECIMAL" />
+		<result column="orthodontic_cure_fee" property="orthodonticCureFee" jdbcType="DECIMAL" />
+		<result column="number_repair_fee" property="numberRepairFee" jdbcType="DECIMAL" />
+		<result column="one_time_fee" property="oneTimeFee" jdbcType="DECIMAL" />
+		<result column="planting_operation_fee" property="plantingOperationFee" jdbcType="DECIMAL" />
+		<result column="planting_repair_fee" property="plantingRepairFee" jdbcType="DECIMAL" />
+		<result column="planting_repair_material_fee" property="plantingRepairMaterialFee" jdbcType="DECIMAL" />
 		 
 	</resultMap>
 
@@ -43,14 +53,16 @@
 		insert into doctor_revenue (organization_name,department, job_number,doctor_name,charge_date,treatment_fee,radiological_fee,
 		operation_fee,inspection_fee,check_fee,medical_materials,dental_implant_fee,orthodontic_fee,planting_fee,pediatric_treatment_fee,
 		pediatric_treatment_fee2,western_medicine_fee,chinese_patent_medicine,total_fee,table_name,material_cost,anesthesia_cost,zj_material_cost,
-		check_medical_materials,planting_material_cost,subtotal_medical_treatment,subtotal_drugs,total_pocket,total_receivables,check_list)
+		check_medical_materials,planting_material_cost,subtotal_medical_treatment,subtotal_drugs,total_pocket,total_receivables,check_list,registration_fee,operation_medical_materials,other_fee,repair_fee,orthodontic_cure_fee,number_repair_fee,one_time_fee,
+		planting_operation_fee,planting_repair_fee,planting_repair_material_fee)
 		values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(#{item.organization_name},#{item.department},#{item.job_number},#{item.doctor_name},#{item.charge_date},#{item.treatment_fee},#{item.radiological_fee},#{item.operation_fee},#{item.inspection_fee},#{item.check_fee},#{item.medical_materials},
 			#{item.dental_implant_fee},#{item.orthodontic_fee},#{item.planting_fee},#{item.pediatric_treatment_fee},#{item.pediatric_treatment_fee2},#{item.western_medicine_fee},#{item.chinese_patent_medicine},#{item.total_fee},
 			#{item.table_name},#{item.material_cost},#{item.anesthesia_cost},#{item.zj_material_cost},#{item.check_medical_materials},#{item.planting_material_cost},
-			#{item.subtotal_medical_treatment},#{item.subtotal_drugs},#{item.total_pocket},#{item.total_receivables},#{item.check_list})
+			#{item.subtotal_medical_treatment},#{item.subtotal_drugs},#{item.total_pocket},#{item.total_receivables},#{item.check_list},#{item.registrationFee},#{item.operationMedicalMaterials},#{item.otherFee},#{item.repairFee},#{item.orthodonticCureFee},
+			#{item.numberRepairFee},#{item.oneTimeFee},#{item.plantingOperationFee},#{item.plantingRepairFee},#{item.plantingRepairMaterialFee})
 		</foreach>
 
 	</insert>
@@ -84,7 +96,17 @@
 		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
 		sum(total_receivables)total_receivables,
-		sum(check_list)check_list
+		sum(check_list)check_list,
+		sum(registration_fee)registrationFee,
+		sum(operation_medical_materials)operationMedicalMaterials,
+		sum(other_fee)otherFee,
+		sum(repair_fee)repairFee,
+		sum(orthodontic_cure_fee)orthodonticCureFee,
+		sum(number_repair_fee)numberRepairFee,
+		sum(one_time_fee)oneTimeFee,
+		sum(planting_operation_fee)plantingOperationFee,
+		sum(planting_repair_fee)plantingRepairFee,
+		sum(planting_repair_material_fee)plantingRepairMaterialFee
 		FROM doctor_revenue where 1=1
 		<include refid="ListWhere"></include>
 	</select>
@@ -143,7 +165,17 @@
 		sum(subtotal_drugs)subtotal_drugs,
 		sum(total_pocket)total_pocket,
 		sum(total_receivables)total_receivables,
-		sum(check_list)check_list
+		sum(check_list)check_list,
+		sum(registration_fee)registrationFee,
+		sum(operation_medical_materials)operationMedicalMaterials,
+		sum(other_fee)otherFee,
+		sum(repair_fee)repairFee,
+		sum(orthodontic_cure_fee)orthodonticCureFee,
+		sum(number_repair_fee)numberRepairFee,
+		sum(one_time_fee)oneTimeFee,
+		sum(planting_operation_fee)plantingOperationFee,
+		sum(planting_repair_fee)plantingRepairFee,
+		sum(planting_repair_material_fee)plantingRepairMaterialFee
 		FROM doctor_revenue   where 1=1
 		<include refid="ListWhere"></include>
 		 group by department,doctor_name order by charge_date

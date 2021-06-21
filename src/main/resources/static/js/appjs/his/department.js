@@ -74,35 +74,35 @@ function load() {
                 field: 'inspection_fee',
                 title: '检验费',
                 align: 'center'
-            }, {
-                field: 'zj_material_cost',
-                title: '正畸材料费',
+            },{
+                field: 'registrationFee',
+                title: '挂号费',
                 align: 'center'
             }, {
                 field: 'treatment_medical_materials',
-                title: '治疗医药用材',
+                title: '治疗一次性用材',
                 align: 'center'
-            }, {
+            },{
+                field: 'operationMedicalMaterials',
+                title: '手术一次性用材',
+                align: 'center'
+            },{
                 field: 'check_medical_materials',
-                title: '检查医药用材',
+                title: '检查一次性用材',
                 align: 'center'
-            }, {
-                field: 'check_fee',
-                title: '检查费',
+            },{
+                field: 'otherFee',
+                title: '其他',
                 align: 'center'
-            }, {
-                field: 'medical_materials',
-                title: '一次性用材',
-                align: 'center'
-            }, {
+            },{
                 field: 'dental_implant_fee',
                 title: '镶牙费',
                 align: 'center'
-            }, {
+            },{
                 field: 'orthodontic_fee',
                 title: '正畸费',
                 align: 'center'
-            }, {
+            },{
                 field: 'planting_fee',
                 title: '种植费',
                 align: 'center'
@@ -113,10 +113,60 @@ function load() {
             //     align: 'center'
             // },
             {
-                field: 'planting_material_cost',
-                title: '种植材料费',
+                field: 'zj_material_cost',
+                title: '正畸材料费',
                 align: 'center'
             },
+            // {
+            //     field: 'planting_material_cost',
+            //     title: '种植材料费',
+            //     align: 'center'
+            // },
+            {
+                field: 'repairFee',
+                title: '修复费',
+                align: 'center'
+            },
+            {
+                field: 'orthodonticCureFee',
+                title: '正畸治疗费',
+                align: 'center'
+            },
+            {
+                field: 'numberRepairFee',
+                title: '数字化修复',
+                align: 'center'
+            },
+            {
+                field: 'oneTimeFee',
+                title: '一次性费用',
+                align: 'center'
+            },
+            {
+                field: 'plantingOperationFee',
+                title: '种植手术费',
+                align: 'center'
+            },
+            {
+                field: 'plantingRepairFee',
+                title: '种植修复费',
+                align: 'center'
+            },
+            {
+                field: 'plantingRepairMaterialFee',
+                title: '种植修复材料费',
+                align: 'center'
+            },
+            {
+                field: 'check_fee',
+                title: '检查费',
+                align: 'center'
+            }, {
+                field: 'medical_materials',
+                title: '一次性用材',
+                align: 'center'
+            },
+
             // {
             //     field: 'subtotal_medical_treatment',
             //     title: '医疗小计',
