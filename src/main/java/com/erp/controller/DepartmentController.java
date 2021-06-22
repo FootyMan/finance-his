@@ -98,10 +98,10 @@ public class DepartmentController extends BaseController {
                 if (!list.get(0).toString().equals("合计") && !list.get(0).toString().equals("")) {
                     //机构名称
                     his_do.setOrganization_name(list.get(1).toString());
-                    //收费日期
-                    his_do.setCharge_date(sdf.parse(list.get(2).toString()));
                     //科室名称
-                    his_do.setDepartment_name(list.get(3).toString());
+                    his_do.setDepartment_name(list.get(2).toString());
+                    //收费日期
+                    his_do.setCharge_date(sdf.parse(list.get(3).toString()));
                     //治疗费
                     his_do.setTreatment_fee(TransformationAmount(list.get(4)));
                     //放射费
@@ -174,7 +174,7 @@ public class DepartmentController extends BaseController {
 
 
                     his_do.setTable_name(getUsername());
-                    charge_date = list.get(2).toString();
+                    charge_date = list.get(3).toString();
                     lockingDate=sdfTwo.format(his_do.getCharge_date());
                     list_dao.add(his_do);
                 }
