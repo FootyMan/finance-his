@@ -81,10 +81,10 @@ public class DoctorController extends BaseController {
 			String fileName = file.getOriginalFilename();
 			// 2003
 			if (fileName.endsWith("xls")) {
-				result = POIUtils.readXlsx2003(in, 1, 38);
+				result = POIUtils.readXlsx2003(in, 1, 39);
 			} else {
 				// 2007
-				result = POIUtils.readXlsx(in, 1, 38);
+				result = POIUtils.readXlsx(in, 1, 39);
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat sdfTwo = new SimpleDateFormat("yyyy-MM");
